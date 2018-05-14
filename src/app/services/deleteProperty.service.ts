@@ -11,7 +11,7 @@ export class DeletePropertyService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public deleteProperty(propertyId : Number, userId: string) {
     let URI = this.serverApi + "/properties/" + propertyId + "/" + userId;

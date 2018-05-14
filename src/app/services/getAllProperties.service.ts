@@ -10,7 +10,7 @@ export class GetAllPropertiesService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public getAllProperties():Observable<Property[]> {
     let URI = this.serverApi + "/properties";

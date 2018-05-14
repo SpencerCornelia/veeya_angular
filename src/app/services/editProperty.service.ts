@@ -12,7 +12,7 @@ export class EditPropertyService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000/properties';
+  private serverApi = 'https://api.getveeya.com:3000/properties';
 
   public getPropertyByID(id): Observable<Property> {
     let URI = this.serverApi + '/editproperty/' + id;

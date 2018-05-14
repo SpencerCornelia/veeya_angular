@@ -12,7 +12,7 @@ export class SoldPropertyService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000/properties';
+  private serverApi = 'https://api.getveeya.com:3000/properties';
 
   public soldPropertyPending(property: Property, investorId: Number) {
     let URI = this.serverApi + "/soldpropertypending";

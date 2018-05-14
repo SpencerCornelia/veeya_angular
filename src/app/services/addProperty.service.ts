@@ -10,7 +10,7 @@ export class AddPropertyService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000/properties';
+  private serverApi = 'https://api.getveeya.com:3000/properties';
 
   public addProperty(property: Property) {
     let URI = this.serverApi + "/addproperty";

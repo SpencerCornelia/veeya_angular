@@ -17,7 +17,7 @@ export class GetConnectionsService {
   private numberOfPendingConnections = new ReplaySubject(1);
   private newPendingConnections: any;
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public getConnectionsForUser(userId: String):Observable<User[]> {
     let URI = this.serverApi + `/user/connections/${userId}`;

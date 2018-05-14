@@ -12,7 +12,7 @@ export class DashboardService {
   constructor(private authService: AuthService,
               private http: Http) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public getData() {
     let userId = this.authService.loggedInUser();

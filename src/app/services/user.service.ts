@@ -13,7 +13,7 @@ export class UserService {
 
   constructor(private http: Http, private authService: AuthService) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public getAllUsers():Observable<User[]> {
     let URI = this.serverApi + "/user/all";

@@ -15,7 +15,7 @@ export class ViewPropertyService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000/properties';
+  private serverApi = 'https://api.getveeya.com:3000/properties';
 
   public getPropertyById(propertyId: String):Observable<Property> {
     let URI = this.serverApi + "/property/" + propertyId;

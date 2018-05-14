@@ -21,7 +21,7 @@ export class AuctionService {
   public propertyExists: boolean = false;
 
   private socket;
-  private api = 'http://localhost:3000';
+  private api = 'https://api.getveeya.com:3000';
 
   constructor(private http: Http) {
     this.socket = io.connect(this.api);
@@ -40,7 +40,7 @@ export class AuctionService {
   }
 
   getInitialBids(propertyId: string) {
-    let URI = `http://localhost:3000/bids/${propertyId}`;
+    let URI = `https://api.getveeya.com:3000/bids/${propertyId}`;
     return this.http.get(URI)
       .map((res) => {
         return res.json()
@@ -114,7 +114,7 @@ export class AuctionService {
   openAuction(propertyId: string, deadline: any) {
     this.bids = [];
 
-    let URI = `http://localhost:3000/bids/openauction`;
+    let URI = `https://api.getveeya.com:3000/bids/openauction`;
     let headers = new Headers;
     let body = JSON.stringify({
       propertyId: propertyId,
@@ -141,7 +141,7 @@ export class AuctionService {
     let newDeadline = month + ' ' + day + ', ' + currentYear + ' ' +
                       hour + ':' + minutes + ':00';
 
-    let URI = `http://localhost:3000/bids/endauction`;
+    let URI = `https://api.getveeya.com:3000/bids/endauction`;
     let headers = new Headers;
     let body = JSON.stringify({
       propertyId: propertyId,

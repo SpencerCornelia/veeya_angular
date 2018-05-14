@@ -24,7 +24,7 @@ export class AuthService {
   constructor(private http: Http, private router: Router) { }
 
   registerUser(user) {
-    let route= "http://localhost:3000/register";
+    let route= "https://api.getveeya.com:3000/register";
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   authenticateUser(user) {
-    let route = "http://localhost:3000/login";
+    let route = "https://api.getveeya.com:3000/login";
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -69,7 +69,7 @@ export class AuthService {
       return this.observable;
     } else {
       let userId = this.loggedInUser();
-      let route = `http://localhost:3000/user/${userId}`;
+      let route = `https://api.getveeya.com:3000/user/${userId}`;
       this.observable = this.http.get(route)
         .map((response) => {
           this.observable = null;
@@ -87,7 +87,7 @@ export class AuthService {
 
   getLoggedInUser() {
     let userId = this.loggedInUser();
-    let route = `http://localhost:3000/user/${userId}`;
+    let route = `https://api.getveeya.com:3000/user/${userId}`;
     return this.http.get(route)
       .map((response) => {
         return response.json();

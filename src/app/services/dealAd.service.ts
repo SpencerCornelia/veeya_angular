@@ -11,7 +11,7 @@ export class DealAdService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public placeNewAd(newAd: NewAd) {
     let URI = this.serverApi + "/ads/placeNewAd";

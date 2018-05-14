@@ -4465,7 +4465,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AddConnectionService = /** @class */ (function () {
     function AddConnectionService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     AddConnectionService.prototype.addConnection = function (userId, connectionUserId) {
         var URI = this.serverApi + "/user/addconnection";
@@ -4539,7 +4539,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AddPropertyService = /** @class */ (function () {
     function AddPropertyService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/properties';
+        this.serverApi = 'https://api.getveeya.com:3000/properties';
     }
     AddPropertyService.prototype.addProperty = function (property) {
         var URI = this.serverApi + "/addproperty";
@@ -4704,7 +4704,7 @@ var AuctionService = /** @class */ (function () {
         this.bids = [];
         this.property = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["a" /* ReplaySubject */](1);
         this.propertyExists = false;
-        this.api = 'http://localhost:3000';
+        this.api = 'https://api.getveeya.com:3000';
         this.socket = __WEBPACK_IMPORTED_MODULE_4_socket_io_client__["connect"](this.api);
     }
     AuctionService.prototype.ngOnInit = function () {
@@ -4718,7 +4718,7 @@ var AuctionService = /** @class */ (function () {
     };
     AuctionService.prototype.getInitialBids = function (propertyId) {
         var _this = this;
-        var URI = "http://localhost:3000/bids/" + propertyId;
+        var URI = "https://api.getveeya.com:3000/bids/" + propertyId;
         return this.http.get(URI)
             .map(function (res) {
             return res.json();
@@ -4788,7 +4788,7 @@ var AuctionService = /** @class */ (function () {
     };
     AuctionService.prototype.openAuction = function (propertyId, deadline) {
         this.bids = [];
-        var URI = "http://localhost:3000/bids/openauction";
+        var URI = "https://api.getveeya.com:3000/bids/openauction";
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"];
         var body = JSON.stringify({
             propertyId: propertyId,
@@ -4810,7 +4810,7 @@ var AuctionService = /** @class */ (function () {
         var minutes = today.getMinutes();
         var newDeadline = month + ' ' + day + ', ' + currentYear + ' ' +
             hour + ':' + minutes + ':00';
-        var URI = "http://localhost:3000/bids/endauction";
+        var URI = "https://api.getveeya.com:3000/bids/endauction";
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"];
         var body = JSON.stringify({
             propertyId: propertyId,
@@ -4875,7 +4875,7 @@ var AuthService = /** @class */ (function () {
     }
     AuthService.prototype.registerUser = function (user) {
         var _this = this;
-        var route = "http://localhost:3000/register";
+        var route = "https://api.getveeya.com:3000/register";
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.post(route, user, { headers: headers })
@@ -4893,7 +4893,7 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.authenticateUser = function (user) {
         var _this = this;
-        var route = "http://localhost:3000/login";
+        var route = "https://api.getveeya.com:3000/login";
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.post(route, user, { headers: headers })
@@ -4919,7 +4919,7 @@ var AuthService = /** @class */ (function () {
         }
         else {
             var userId = this.loggedInUser();
-            var route = "http://localhost:3000/user/" + userId;
+            var route = "https://api.getveeya.com:3000/user/" + userId;
             this.observable = this.http.get(route)
                 .map(function (response) {
                 _this.observable = null;
@@ -4936,7 +4936,7 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.getLoggedInUser = function () {
         var userId = this.loggedInUser();
-        var route = "http://localhost:3000/user/" + userId;
+        var route = "https://api.getveeya.com:3000/user/" + userId;
         return this.http.get(route)
             .map(function (response) {
             return response.json();
@@ -5076,7 +5076,7 @@ var DashboardService = /** @class */ (function () {
     function DashboardService(authService, http) {
         this.authService = authService;
         this.http = http;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     DashboardService.prototype.getData = function () {
         var userId = this.authService.loggedInUser();
@@ -5120,7 +5120,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DealAdService = /** @class */ (function () {
     function DealAdService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     DealAdService.prototype.placeNewAd = function (newAd) {
         var URI = this.serverApi + "/ads/placeNewAd";
@@ -5195,7 +5195,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var DeletePropertyService = /** @class */ (function () {
     function DeletePropertyService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     DeletePropertyService.prototype.deleteProperty = function (propertyId, userId) {
         var URI = this.serverApi + "/properties/" + propertyId + "/" + userId;
@@ -5254,7 +5254,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var EditPropertyService = /** @class */ (function () {
     function EditPropertyService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/properties';
+        this.serverApi = 'https://api.getveeya.com:3000/properties';
     }
     EditPropertyService.prototype.getPropertyByID = function (id) {
         var URI = this.serverApi + '/editproperty/' + id;
@@ -5366,7 +5366,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var GetAllPropertiesService = /** @class */ (function () {
     function GetAllPropertiesService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     GetAllPropertiesService.prototype.getAllProperties = function () {
         var URI = this.serverApi + "/properties";
@@ -5417,7 +5417,7 @@ var GetConnectionsService = /** @class */ (function () {
         this.authService = authService;
         this.pendingConnections = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Rx__["a" /* ReplaySubject */](1);
         this.numberOfPendingConnections = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Rx__["a" /* ReplaySubject */](1);
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     GetConnectionsService.prototype.getConnectionsForUser = function (userId) {
         var URI = this.serverApi + ("/user/connections/" + userId);
@@ -5489,7 +5489,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var GetUserPropertiesService = /** @class */ (function () {
     function GetUserPropertiesService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/properties';
+        this.serverApi = 'https://api.getveeya.com:3000/properties';
     }
     GetUserPropertiesService.prototype.getWholesalerUserProperties = function (wholesalerID) {
         var URI = this.serverApi + "/wholesaler/" + wholesalerID;
@@ -5553,7 +5553,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var InviteService = /** @class */ (function () {
     function InviteService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/';
+        this.serverApi = 'https://api.getveeya.com:3000/';
     }
     InviteService.prototype.inviteUser = function (email, userType, currentUserId) {
         var URI = this.serverApi + "user/inviteuser";
@@ -5760,13 +5760,13 @@ var ProfileService = /** @class */ (function () {
         this.http = http;
     }
     ProfileService.prototype.getWholesalerProfileInfo = function (wholesalerID) {
-        var route = 'http://localhost:3000/wholesaler/' + wholesalerID;
+        var route = 'https://api.getveeya.com:3000/wholesaler/' + wholesalerID;
         return this.http.get(route)
             .map(function (res) { return res.json(); })
             .map(function (res) { return res.data; });
     };
     ProfileService.prototype.getInvestorProfileInfo = function (investorID) {
-        var route = 'http://localhost:3000/investor/' + investorID;
+        var route = 'https://api.getveeya.com:3000/investor/' + investorID;
         return this.http.get(route)
             .map(function (res) { return res.json(); })
             .map(function (res) { return res.data; });
@@ -5807,7 +5807,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var SoldPropertyService = /** @class */ (function () {
     function SoldPropertyService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/properties';
+        this.serverApi = 'https://api.getveeya.com:3000/properties';
     }
     SoldPropertyService.prototype.soldPropertyPending = function (property, investorId) {
         var URI = this.serverApi + "/soldpropertypending";
@@ -5904,7 +5904,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var UploadListService = /** @class */ (function () {
     function UploadListService(http) {
         this.http = http;
-        this.serverApi = 'http://localhost:3000/';
+        this.serverApi = 'https://api.getveeya.com:3000/';
     }
     UploadListService.prototype.uploadList = function (list, currentUserId) {
         var URI = this.serverApi + "user/uploadList";
@@ -5962,7 +5962,7 @@ var UserService = /** @class */ (function () {
     function UserService(http, authService) {
         this.http = http;
         this.authService = authService;
-        this.serverApi = 'http://localhost:3000';
+        this.serverApi = 'https://api.getveeya.com:3000';
     }
     UserService.prototype.getAllUsers = function () {
         var URI = this.serverApi + "/user/all";
@@ -6180,7 +6180,7 @@ var ViewPropertyService = /** @class */ (function () {
     function ViewPropertyService(http) {
         this.http = http;
         this.soldProperty = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
-        this.serverApi = 'http://localhost:3000/properties';
+        this.serverApi = 'https://api.getveeya.com:3000/properties';
     }
     ViewPropertyService.prototype.getPropertyById = function (propertyId) {
         var URI = this.serverApi + "/property/" + propertyId;

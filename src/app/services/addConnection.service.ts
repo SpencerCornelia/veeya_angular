@@ -11,7 +11,7 @@ export class AddConnectionService {
 
   constructor(private http: Http) { }
 
-  private serverApi = 'http://localhost:3000';
+  private serverApi = 'https://api.getveeya.com:3000';
 
   public addConnection(userId: string, connectionUserId: string):Observable<User[]> {
     let URI = this.serverApi + "/user/addconnection";

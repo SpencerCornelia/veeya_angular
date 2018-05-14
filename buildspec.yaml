@@ -1,0 +1,39 @@
+version: 0.1
+
+environment_variables:
+ plaintext:
+  S3_BUCKET: "getveeya.com"
+  CF_ID: "E2MLBJ1HEUINX1"
+
+phases:
+    install:
+        commands:
+        - npm install
+        - npm install -g @angular/cli@1.7.1 --unsafe
+
+    build:
+        commands:
+        # Builds Angular application.
+        - echo Build started on `date`
+        - ng build
+
+    post_build:
+        commands:
+        # Clear S3 bucket.
+        - aws s3 rm s3://$S3_BUCKET --recursive
+        - echo S3 bucket is cleared.
+        # Copy dist folder to S3 bucket
+        - aws s3 sync public/ s3://$S3_BUCKET/ --delete
+        - echo Build completed on `date`
+        # Create invalidation
+        - aws cloudfront create-invalidation --distribution-id $CF_ID --paths "/*"
+
+cache:
+  paths:
+    - 'node_modules/**/*'
+
+artifacts:
+    files:
+        - '**/*'
+    discard-paths: yes
+    base-directory: 'public*'
