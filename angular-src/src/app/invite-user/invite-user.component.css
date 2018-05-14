@@ -1,0 +1,20 @@
+.required-field:after {
+  content: " *";
+  color: red;
+}
+
+#submitBtn:disabled {
+  cursor: not-allowed;
+}
+
+.form-control.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.form-control.ng-valid.ng-touched {
+  border: 1px solid green;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

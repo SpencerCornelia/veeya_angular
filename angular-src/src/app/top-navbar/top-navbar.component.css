@@ -1,0 +1,111 @@
+.top-navbar {
+  margin-left: 255px;
+  height: 55px;
+  background: linear-gradient(88deg, #002e63, #005b96);
+}
+
+.navbar-container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 100%;
+}
+
+.navbar-container:first-child {
+  margin-left: 20px;
+}
+
+.username-item {
+  margin-right: 30px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.navbar-list-item {
+  color: white;
+  flex-wrap: nowrap;
+  text-align: center;
+  display: inherit;
+  margin-left: 12px;
+}
+
+.navbar-list-item svg {
+  margin-top: 10px;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-list-item:hover svg {
+  color: #FFFFFF;
+}
+
+.navbar-list-item:hover > a {
+  color: white;
+}
+
+.logout-link {
+  margin-right: auto;
+}
+
+.logout-link a, .username-item a {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.new-nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  padding: 0.5rem 1rem;
+}
+
+.new-nav-link:hover, .new-nav-link:focus {
+  text-decoration: none;
+  cursor: pointer;
+  color: #FFFFFF;
+}
+
+#logout-list-item:hover {
+  cursor: pointer;
+}
+
+@media all and (max-width: 600px) {
+  #username-list-item, #profile-photo-list-item, #logout-list-item, #contact-list-item, #about-list-item, #support-list-item {
+    display: none;
+  }
+}
+
+@media all and (max-width: 835px) {
+  #profile-photo-list-item, #username-list-item {
+    display: none;
+  }
+
+  .navbar-list-item {
+    flex-grow: 2
+  }
+}
+
+@media all and (min-width: 836px) {
+  #profile-photo-list-item, #username-list-item {
+    display: inherit;
+  }
+}
+
+@media all and (max-width: 991px) {
+  #menu-list-item {
+    display: inherit;
+  }
+}
+
+@media all and (min-width: 992px) {
+  #menu-list-item {
+    display: none;
+  }
+}
+
+@media all and (max-width: 991px) {
+  .top-navbar {
+    margin-left: 0px;
+  }
+}

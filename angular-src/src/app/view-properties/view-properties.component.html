@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+    <app-sidebar></app-sidebar>
+
+
+    <div class="container-fluid page-body-wrapper" *ngIf="currentUser">
+
+
+
+      <div class="main-panel" *ngIf="userType=='Wholesaler'">
+        <div class="content-wrapper">
+          <div class="row grid-margin">
+
+
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Listed Properties</h4>
+                  <p class="card-text" *ngIf="wholesalerPropertiesListed.length==0">
+                    You currently do not have any properties listed. If you have a property under contract and would like to upload the property for investors to see,
+                    please click <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                      [routerLink]="['/addproperty']">HERE</button>.
+                  </p>
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr class="table-row" *ngFor="let property of wholesalerPropertiesListed">
+                          <td id="property-photo-wrapper">
+                            <div class="d-flex justify-content-center">
+                              <img src="{{ property.photos[0] }}" alt="" id="property-photo" [routerLink]="['/view/', property._id]">
+                            </div>
+                          </td>
+                          <td id="property-address-wrapper">
+                            <a [routerLink]="['/view/', property._id]">
+                              <h3>{{ property.address }}</h3>
+                            </a>
+                            <p>
+                              {{ property.propertyType }}
+                            </p>
+                            <div *ngIf="property.auctionEstablished=='true'">
+                              <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                                (click)="enterAuction(property)">View Bids
+                              </button>
+                            </div>
+                            <div *ngIf="property.auctionEstablished=='false'">
+                              <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                                (click)="openAuction(property)">Open Auction
+                              </button>
+                            </div>
+                          </td>
+                          <td>
+                            <h3 class="property-row-right">
+                              $ {{ property.purchasePrice }}
+                            </h3>
+                            <div class="property-row-right">
+                              <div class="btn btn-primary btn-rounded btn-fw property-status">
+                                {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                              </div>
+                            </div>
+                            <div class="property-row-right">
+                              <div class="btn btn-warning btn-rounded btn-fw property-status">Listed</div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row grid-margin">
+            <div class="col-lg-12">
+              <div class="card px-3">
+                <div class="card-body">
+                  <h4 class="card-title">Sold Properties</h4>
+                  <p class="card-text" *ngIf="wholesalerPropertiesSold.length==0">
+                    You have not sold any properties. Good luck going out and finding a deal!
+                  </p>
+
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr class="table-row" *ngFor="let property of wholesalerPropertiesSold">
+                          <td id="property-photo-wrapper">
+                            <div class="d-flex justify-content-center">
+                              <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                            </div>
+                          </td>
+                          <td id="property-address-wrapper">
+                            <a [routerLink]="['/view/', property._id]">
+                              <h3>{{ property.address }}</h3>
+                            </a>
+                            <p>
+                              {{ property.propertyType }}
+                            </p>
+                          </td>
+                          <td>
+                            <h3 class="property-row-right">
+                              $ {{ property.purchasePrice }}
+                            </h3>
+                            <div class="property-row-right">
+                              <div class="btn btn-primary btn-rounded btn-fw property-status">
+                                {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                              </div>
+                            </div>
+                            <div class="property-row-right">
+                              <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4 property-status">Sold</div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row grid-margin">
+            <div class="col-lg-12">
+              <div class="card px-3">
+                <div class="card-body">
+                  <h4 class="card-title">Sold Properties Awaiting Confirmation</h4>
+                  <p class="card-text" *ngIf="wholesalerPropertiesSoldPending==0">
+                    You do not have any sold properties awaiting confirmation from an investor.
+                  </p>
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr class="table-row" *ngFor="let property of wholesalerPropertiesSoldPending">
+                          <td id="property-photo-wrapper">
+                            <div class="d-flex justify-content-center">
+                              <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                            </div>
+                          </td>
+                          <td id="property-address-wrapper">
+                            <a [routerLink]="['/view/', property._id]">
+                              <h3>{{ property.address }}</h3>
+                            </a>
+                            <p>
+                              {{ property.propertyType }}
+                            </p>
+                            <div>
+                              <button type="button" class="btn btn-inverse-warning btn-rounded btn-sm mt-3 mb-4 property-status">
+                                Sold Pending
+                              </button>
+                            </div>
+                          </td>
+                          <td>
+                            <h3 class="property-row-right">
+                              $ {{ property.purchasePrice }}
+                            </h3>
+                            <div class="property-row-right">
+                              <div class="btn btn-primary btn-rounded btn-fw property-status">
+                                {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                              </div>
+                            </div>
+                            <div class="property-row-right">
+                              <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4 property-status">Sold Pending</div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div> <!-- end of table-responsive -->
+
+              </div> <!-- end of card body -->
+            </div> <!-- end of card px-3 -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end row grid margin -->
+
+        <app-footer></app-footer>
+
+      </div> <!-- content-wrapper ends -->
+    </div> <!-- main-panel ends / End of Wholesaler -->
+
+
+    <div class="main-panel" *ngIf="currentUser.userType=='Investor'">
+      <div class="content-wrapper">
+
+        <div class="row" *ngIf="investorPropertiesBoughtPending.length>0">
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4>Awaiting Your Approval</h4>
+
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="table-row" *ngFor="let property of investorPropertiesSoldPending">
+                        <td id="property-photo-wrapper">
+                          <div class="d-flex justify-content-center">
+                            <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                          </div>
+                        </td>
+                        <td id="property-address-wrapper">
+                          <a [routerLink]="['/view/', property._id]">
+                            <h3>{{ property.address }}</h3>
+                          </a>
+                          <p>
+                            {{ property.propertyType }}
+                          </p>
+                          <div>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              (click)="acceptSold(property)">Accept
+                            </button>
+                            <button class="btn btn-inverse-danger btn-rounded btn-sm mt-3 mb-4"
+                              (click)="denySold(property)">Deny
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <h3 class="property-row-right">
+                            $ {{ property.purchasePrice }}
+                          </h3>
+                          <div class="property-row-right">
+                            <div class="btn btn-primary btn-rounded btn-fw property-status">
+                              {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                            </div>
+                          </div>
+                          <div class="property-row-right">
+                            <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4 property-status">Sold Pending</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> <!-- end of table-responsive -->
+
+              </div> <!-- end of card-body -->
+            </div> <!-- end of card -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end of row -->
+
+        <div class="row grid-margin">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Properties Listed by Connections</h4>
+                <p class="card-text" *ngIf="investorPropertiesConnected.length==0">
+                  Your wholesaler connections do not have any properties listed. Click <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4" [routerLink]="['/search']">HERE</button> to search for other wholesalers or properties.
+                </p>
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="table-row" *ngFor="let property of investorPropertiesConnected">
+                        <td id="property-photo-wrapper">
+                          <div class="d-flex justify-content-center">
+                            <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                          </div>
+                        </td>
+                        <td id="property-address-wrapper">
+                          <a [routerLink]="['/view/', property._id]">
+                            <h3>{{ property.address }}</h3>
+                          </a>
+                          <p>
+                            {{ property.propertyType }}
+                          </p>
+                          <div>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              (click)="enterAuction(property)">View Wholesaler
+                            </button>
+                            <button *ngIf="property.auctionEstablished=='true'" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              (click)="enterAuction(property)">Enter Auction
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <h3 class="property-row-right">
+                            $ {{ property.purchasePrice }} <span class="star" (click)="starProperty(property)">
+                                                             <i class="far fa-star fa-lg"></i>
+                                                           </span>
+                          </h3>
+                          <div class="property-row-right">
+                            <div class="btn btn-primary btn-rounded btn-fw property-status">
+                              {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                            </div>
+                            <div class="btn btn-warning btn-rounded btn-fw property-status">Listed</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> <!-- end of table-responsive -->
+
+              </div> <!-- end of card-body -->
+            </div> <!-- end of card -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end of row grid margin -->
+
+
+        <div class="row grid-margin">
+          <div class="col-lg-12">
+            <div class="card px-3">
+              <div class="card-body">
+                <h4 class="card-title">Properties Starred</h4>
+
+                <p class="card-text" *ngIf="investorPropertiesStarred.length==0">
+                  You do not have any properties starred. If your wholesaler connections do not have any properties listed that interest you, feel free to Click <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4" [routerLink]="['/search']">HERE</button> to search for properties.
+                </p>
+
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="table-row" *ngFor="let property of investorPropertiesStarred">
+                        <td id="property-photo-wrapper">
+                          <div class="d-flex justify-content-center">
+                            <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                          </div>
+                        </td>
+                        <td id="property-address-wrapper">
+                          <a [routerLink]="['/view/', property._id]">
+                            <h3>{{ property.address }}</h3>
+                          </a>
+                          <p>
+                            {{ property.propertyType }}
+                          </p>
+                          <div>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              [routerLink]="['/user/', property.wholesaler_id]">View Wholesaler
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <h3 class="property-row-right">
+                            $ {{ property.purchasePrice }} <span class="star full" (click)="unStarProperty(property)">
+                                                             <i class="fas fa-star fa-lg"></i>
+                                                           </span>
+                          </h3>
+                          <div class="property-row-right">
+                            <div class="btn btn-primary btn-rounded btn-fw property-status">
+                              {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                            </div>
+                            <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4">Starred</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> <!-- end of table responsive -->
+
+
+              </div> <!-- end of card-body -->
+            </div> <!-- end of card px-3 -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end of row grid margin -->
+
+
+        <div class="row grid-margin">
+          <div class="col-lg-12">
+            <div class="card px-3">
+              <div class="card-body">
+                <h4 class="card-title">Properties Bought</h4>
+
+                <p class="card-text" *ngIf="investorPropertiesBought.length==0">
+                  You have not bought any properties yet. Your first purchase is right around the corner!
+                </p>
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="table-row" *ngFor="let property of investorPropertiesBought">
+                        <td id="property-photo-wrapper">
+                          <div class="d-flex justify-content-center">
+                            <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                          </div>
+                        </td>
+                        <td id="property-address-wrapper">
+                          <a [routerLink]="['/view/', property._id]">
+                            <h3>{{ property.address }}</h3>
+                          </a>
+                          <p>
+                            {{ property.propertyType }}
+                          </p>
+                          <div>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              [routerLink]="['/user/', property.wholesaler_id]">View Wholesaler
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <h3 class="property-row-right">
+                            $ {{ property.purchasePrice }}
+                          </h3>
+                          <div class="property-row-right">
+                            <div class="btn btn-primary btn-rounded btn-fw property-status">
+                              {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                            </div>
+                            <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4 property-success">Sold</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table> <!-- end of table -->
+                </div> <!-- end of table-responsive -->
+
+              </div> <!-- end of card-body -->
+            </div> <!-- end of card px-3 -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end of row grid margin -->
+
+        <app-footer></app-footer>
+
+      </div> <!-- content-wrapper ends -->
+    </div> <!-- main-panel ends / Investor ends -->
+
+
+
+    <div class="main-panel" *ngIf="currentUser.userType=='Lender'">
+      <div class="content-wrapper">
+
+
+        <div class="row grid-margin">
+          <div class="col-lg-12">
+            <div class="card px-3">
+              <div class="card-body">
+                <h4 class="card-title">Properties Carrying the Note</h4>
+
+
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <tbody>
+                      <tr class="table-row" *ngFor="let property of lenderPropertiesBought">
+                        <td id="property-photo-wrapper">
+                          <div class="d-flex justify-content-center">
+                            <img src="{{ property.photos[0] }}" alt="" id="property-photo">
+                          </div>
+                        </td>
+                        <td id="property-address-wrapper">
+                          <a [routerLink]="['/view/', property._id]">
+                            <h3>{{ property.address }}</h3>
+                          </a>
+                          <p>
+                            {{ property.propertyType }}
+                          </p>
+                          <div>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              [routerLink]="['/user/', property.wholesaler_id]">View Wholesaler
+                            </button>
+                          </div>
+                        </td>
+                        <td>
+                          <h3 class="property-row-right">
+                            $ {{ property.purchasePrice }}
+                          </h3>
+                          <div class="property-row-right">
+                            <div class="btn btn-primary btn-rounded btn-fw property-status">
+                              {{ property.city }}, {{ property.state }} {{ property.zipCode }}
+                            </div>
+                            <div class="btn btn-inverse-success btn-rounded btn-sm mt-3 mb-4">Sold</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> <!-- end of table-responsive -->
+
+
+              </div> <!-- end of card-body -->
+            </div> <!-- end of card px-3 -->
+          </div> <!-- end of col-lg-12 -->
+        </div> <!-- end of row grid margin -->
+      </div> <!-- content-wrapper ends -->
+
+
+      <app-footer></app-footer>
+
+    </div> <!-- main-panel ends / Lender ends -->
+
+
+      <!-- Add Auction Closing Time MODAL -->
+      <div class="modal fade" id="deadlineModal" tabindex="-1" role="dialog"
+                aria-labelledby="deadlineModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="closingTimeModal">Add Deadline for Auction</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class="forms-sample" #deadlineForm="ngForm">
+                <div class="form-group">
+                  <label for="month">Month:</label>
+                  <select class="form-control" [(ngModel)]="dateTime.month" name="month"
+                    #month="ngModel">
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="closingTime">Day:</label>
+                  <select class="form-control" [(ngModel)]="dateTime.day" name="day"
+                    #day="ngModel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="hour">Hour:</label>
+                  <select class="form-control" [(ngModel)]="dateTime.hour" name="hour"
+                    #hour="ngModel">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="minutes">Minutes:</label>
+                  <select class="form-control" [(ngModel)]="dateTime.minutes" name="minutes"
+                    #minutes="ngModel">
+                    <option value="00">00</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <option value="46">46</option>
+                    <option value="47">47</option>
+                    <option value="48">48</option>
+                    <option value="49">49</option>
+                    <option value="50">50</option>
+                    <option value="51">51</option>
+                    <option value="52">52</option>
+                    <option value="53">53</option>
+                    <option value="54">54</option>
+                    <option value="55">55</option>
+                    <option value="56">56</option>
+                    <option value="57">57</option>
+                    <option value="58">58</option>
+                    <option value="59">59</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="am">am</label>
+                  <input name="am" type="radio" value="am" [(ngModel)]="dateTime.time">
+                  <label for="pm">pm</label>
+                  <input name="pm" type="radio" value="pm" [(ngModel)]="dateTime.time">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button id="deadlineConfirm" type="button"
+                class="btn btn-primary"
+                [disabled]="deadlineForm.invalid"
+                (click)="submitDeadlineModal()"
+              >Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- END MODAL -->
+
+
+
+
+
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller ends -->
+
+</body>
+
+</html>

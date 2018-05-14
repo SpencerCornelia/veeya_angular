@@ -1,0 +1,44 @@
+.required-field {
+  font-size: 12px;
+}
+
+.required-field:after {
+  content: " *";
+  color: red;
+}
+
+#propertyImage {
+  height: 140px;
+  max-width: 100%;
+}
+
+#photoCard {
+  margin-left: 10px;
+}
+
+#generateReportTitle {
+  display: table;
+  margin: 0 auto;
+}
+
+.buttons {
+  display: table;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.buttons button {
+  margin-right: 10px;
+}
+
+#property-image-enlarged {
+  max-width: 100%;
+}
+
+#propertyImage:hover {
+  cursor: pointer;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

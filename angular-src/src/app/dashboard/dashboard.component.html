@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+    <app-sidebar></app-sidebar>
+
+
+    <div class="container-fluid page-body-wrapper">
+
+      <div class="main-panel" *ngIf="currentUser">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="fas fa-users fa-2x text-success"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Connections Made</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">
+                          {{ connectionsMade }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="fas fa-star fa-xs"></i>
+                    Total Connections
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="fas fa-user-plus fa-2x text-primary"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Invites Sent</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">
+                          {{ invitesSent }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="fas fa-plus fa-xs"></i>
+                    Total Invites
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="fas fa-home fa-2x text-info"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Properties Bought</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">
+                          {{ propertiesBought }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="far fa-money-bill-alt fa-xs"></i>
+                    Total Bought
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="fas fa-home fa-2x text-info"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Properties Sold</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">
+                          {{ propertiesSold }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="far fa-money-bill-alt fa-xs"></i>
+                    Total Sold
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="form-row row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <ngx-charts-advanced-pie-chart
+                  [view]="view"
+                  class="chart-container"
+                  [scheme]="colorScheme"
+                  schemeType="ordinal"
+                  [results]="profileViews"
+                  legend="true"
+                  gradient="false"
+                  xAxis="true"
+                  yAxis="true"
+                  showXAxisLabel="true"
+                  showYAxisLabel="true"
+                  xAxisLabel="x-axis-test"
+                  yAxisLabel="y-axis-test"
+                  autoScale="true"
+                  timeline="false"
+                  showGridLines="true">
+                </ngx-charts-advanced-pie-chart>
+              </div> <!-- card end -->
+            </div> <!-- col-md-12 end -->
+          </div> <!-- form-row row end -->
+
+          <div class="form-row row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <ngx-charts-bar-horizontal-2d
+                  [view]="view"
+                  class="chart-container"
+                  [scheme]="colorScheme"
+                  schemeType="ordinal"
+                  [results]="propertiesAddedPendingSold"
+                  legend="true"
+                  gradient="false"
+                  xAxis="true"
+                  yAxis="true"
+                  showXAxisLabel="true"
+                  showYAxisLabel="true"
+                  xAxisLabel="x-axis-test"
+                  yAxisLabel="y-axis-test"
+                  autoScale="true"
+                  timeline="false"
+                  showGridLines="true">
+                </ngx-charts-bar-horizontal-2d>
+
+              </div> <!-- card end -->
+            </div> <!-- col-md-12 end -->
+          </div> <!-- form-row row end -->
+
+
+
+
+        </div> <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller -->
+
+</body>
+
+</html>

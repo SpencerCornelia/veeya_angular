@@ -1,0 +1,15 @@
+#main-panel-generate-report {
+  width: 100%;
+}
+
+.current-year-title {
+  padding: 10px;
+}
+
+.column-head {
+  border-bottom-color: black
+}
+
+.column-totals {
+  border-top: 1px solid black;
+}

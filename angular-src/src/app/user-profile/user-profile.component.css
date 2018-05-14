@@ -1,0 +1,15 @@
+.connect-button-row {
+  width: 100%;
+}
+
+.connect-button {
+  margin-left: 30%;
+}
+
+#accept-button {
+  margin-left: 10%
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

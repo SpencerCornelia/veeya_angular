@@ -1,0 +1,85 @@
+<div class="new-sidebar new-sidebar-offcanvas" id="new-sidebar">
+  <div class="logo">
+    <a href="/dashboard">
+      <div class="container">
+        <img src="" alt />
+      </div>
+    </a>
+    <a href="/dashboard">
+      Veeya
+    </a>
+  </div>
+
+  <ul class="new-nav">
+    <li class="new-nav-item">
+      <a class="new-nav-link" *ngIf="authService.loggedIn()" [routerLink]="['/dashboard']">
+        <i class="far fa-chart-bar"></i>
+        <span class="new-new-menu-title">Dashboard</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn() && authService.wholesalerUser()">
+      <a class="new-nav-link" [routerLink]="['/addproperty']">
+        <i class="fas fa-plus"></i>
+        <span class="new-menu-title">Add Property</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/properties']">
+        <i class="fas fa-home"></i>
+        <span class="new-menu-title">View Properties</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/connections']">
+        <i class="fas fa-users"></i>
+        <span class="new-menu-title">Connections</span>
+        <div class="badge-wrapper">
+          <span id="badge"></span>
+          <span id="badge-number"></span>
+        </div>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/inviteuser']">
+        <i class="fas fa-user-plus"></i>
+        <span class="new-menu-title">Invite User</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/search']">
+        <i class="fas fa-search"></i>
+        <span class="new-menu-title">Search</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn() && authService.investorUser()">
+      <a class="new-nav-link" [routerLink]="['/placeDealAd']">
+        <i class="far fa-newspaper"></i>
+        <span class="new-menu-title">Place Ad for Deal</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/viewDealAds']">
+        <i class="fas fa-arrow-circle-right"></i>
+        <span class="new-menu-title">View Wanted Deals</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.wholesalerUser()">
+      <a class="new-nav-link" *ngIf="authService.loggedIn()" [routerLink]="['/uploadlist']">
+        <i class="fas fa-list-ul"></i>
+        <span class="new-menu-title">Upload Buyers List</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.investorUser()">
+      <a class="new-nav-link" *ngIf="authService.loggedIn()" [routerLink]="['/uploadlist']">
+        <i class="fas fa-list-ul"></i>
+        <span class="new-menu-title">Upload Wholesalers List</span>
+      </a>
+    </li>
+    <li class="new-nav-item" *ngIf="authService.loggedIn()">
+      <a class="new-nav-link" [routerLink]="['/profile', authService.loggedInUser()]">
+        <i class="far fa-user-circle"></i>
+        <span class="new-menu-title">My Profile</span>
+      </a>
+    </li>
+  </ul>
+</div>

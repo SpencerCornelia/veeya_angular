@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4>Connection Requests</h4>
+                  <h6 *ngIf="!pendingConnections">No connection requests at this time. Time to network!</h6>
+
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr *ngFor="let connection of pendingConnectionsArray">
+                          <td id="connection-photo-wrapper">
+                            <div class="d-flex justify-content-center">
+                              <a (click)='visitProfile(connection)'>
+                                <img src="{{ connection.profilePhoto }}" alt="" id="connection-photo">
+                              </a>
+                            </div>
+                          </td>
+
+                          <td id="connection-name-wrapper">
+                            <a (click)="visitProfile(connection)">
+                              <h3>{{ connection?.firstName }} {{ connection?.lastName }}</h3>
+                            </a>
+                            <p>
+                              {{ connection.userType }}
+                            </p>
+                            <div id="connection-stats-wrapper">
+                              <div>
+                                <div class="connection-stats-number">{{ connection.profileViews }}</div>
+                                <div>Profile Views</div>
+                              </div>
+                              <div>
+                                <div class="connection-stats-number">{{ connection.connections.length }}</div>
+                                <div>Connections</div>
+                              </div>
+                              <div>
+                                <div class="connection-stats-number"
+                                  *ngIf="connection.userType=='Wholesaler'">{{ connection.wholesalerSoldProperties.length }}</div>
+                                <div class="connection-stats-number"
+                                  *ngIf="connection.userType=='Investor'">{{ connection.investorBoughtProperties.length }}</div>
+                                <div class="connection-stats-number"
+                                  *ngIf="connection.userType=='Lender'">{{ connection.lenderLoanedProperties.length }}</div>
+                                <div>Deals</div>
+                              </div>
+                            </div>
+                          </td>
+
+                          <td>
+                            <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                              (click)="acceptRequest(connection)">Accept
+                            </button>
+                            <button class="btn btn-inverse-danger btn-rounded btn-sm mt-3 mb-4"
+                              (click)="denyRequest(connection)">Deny
+                            </button>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Current Connections</h4>
+                  <h6 *ngIf="connections.length==0">Click <button class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                      [routerLink]="['/search']">here</button> to use the Search functionality to find users to connect with.
+                    </h6>
+                  <table class="table" *ngIf="connections.length > 0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Profile</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchFirstName" name="filterFirstName" value="Search" />
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchLastName" name="filterLastName" value="Search" />
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchEmail" name="filterEmail" value="Search" />
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchPhoneNumber" name="filterPhoneNumber" value="Search" />
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchCity" name="filterCity" value="Search" />
+                        </td>
+                        <td class="connections-search-input">
+                          <input [(ngModel)]="searchState" name="filterState" value="Search" />
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr *ngFor="let connection of connections
+                        | filterFirstName: searchFirstName
+                        | filterLastName: searchLastName
+                        | filterEmail: searchEmail
+                        | filterPhoneNumber: searchPhoneNumber
+                        | filterCity: searchCity
+                        | filterState: searchState;
+                        let i=index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ connection.firstName }}</td>
+                        <td>{{ connection.lastName }}</td>
+                        <td>{{ connection.email }}</td>
+                        <td>{{ connection.phoneNumber }}</td>
+                        <td>{{ connection.city }}</td>
+                        <td>{{ connection.state }}</td>
+                        <td><a [routerLink]="['/user/' + connection._id]">View</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller -->
+
+</body>
+
+</html>

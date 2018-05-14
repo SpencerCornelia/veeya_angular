@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+
+          <div class="row" id="search-row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <h4 class="card-title">Search Ads Wizard</h4>
+
+                <div class="wizard-steps">
+                  <div role="tab" class="tab active" id="location-tab">
+                    <div class="tab-text">1. Location</div>
+                  </div>
+                  <div role="tab" class="tab" id="property-tab">
+                    <div class="tab-text">2. Property</div>
+                  </div>
+                  <div role="tab" class="tab" id="return-tab">
+                    <div class="tab-text">3. Return</div>
+                  </div>
+                  <div role="tab" class="tab" id="confirm-tab">
+                    <div class="tab-text">4. Confirm</div>
+                  </div>
+                </div>
+
+
+                <div class="card-body" id="content-wrapper">
+
+                  <!-- Location tab -->
+                  <div class="location-content" id="location-content">
+                    <div class="form-group row">
+                      <label for="city" class="col-sm-2 col-form-label">City</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="Enter City" [(ngModel)]="deal.city">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">State</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.state" name="state" class="form-control">
+                          <option value="AL">Alabama</option>
+                          <option value="AK">Alaska</option>
+                          <option value="AZ">Arizona</option>
+                          <option value="AR">Arkansas</option>
+                          <option value="CA">California</option>
+                          <option value="CO">Colorado</option>
+                          <option value="CT">Connecticut</option>
+                          <option value="DE">Delaware</option>
+                          <option value="DC">District Of Columbia</option>
+                          <option value="FL">Florida</option>
+                          <option value="GA">Georgia</option>
+                          <option value="HI">Hawaii</option>
+                          <option value="ID">Idaho</option>
+                          <option value="IL">Illinois</option>
+                          <option value="IN">Indiana</option>
+                          <option value="IA">Iowa</option>
+                          <option value="KS">Kansas</option>
+                          <option value="KY">Kentucky</option>
+                          <option value="LA">Louisiana</option>
+                          <option value="ME">Maine</option>
+                          <option value="MD">Maryland</option>
+                          <option value="MA">Massachusetts</option>
+                          <option value="MI">Michigan</option>
+                          <option value="MN">Minnesota</option>
+                          <option value="MS">Mississippi</option>
+                          <option value="MO">Missouri</option>
+                          <option value="MT">Montana</option>
+                          <option value="NE">Nebraska</option>
+                          <option value="NV">Nevada</option>
+                          <option value="NH">New Hampshire</option>
+                          <option value="NJ">New Jersey</option>
+                          <option value="NM">New Mexico</option>
+                          <option value="NY">New York</option>
+                          <option value="NC">North Carolina</option>
+                          <option value="ND">North Dakota</option>
+                          <option value="OH">Ohio</option>
+                          <option value="OK">Oklahoma</option>
+                          <option value="OR">Oregon</option>
+                          <option value="PA">Pennsylvania</option>
+                          <option value="RI">Rhode Island</option>
+                          <option value="SC">South Carolina</option>
+                          <option value="SD">South Dakota</option>
+                          <option value="TN">Tennessee</option>
+                          <option value="TX">Texas</option>
+                          <option value="UT">Utah</option>
+                          <option value="VT">Vermont</option>
+                          <option value="VA">Virginia</option>
+                          <option value="WA">Washington</option>
+                          <option value="WV">West Virginia</option>
+                          <option value="WI">Wisconsin</option>
+                          <option value="WY">Wyoming</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="zip" class="col-sm-2 col-form-label">Zip Code</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Zip Code" [(ngModel)]="deal.zipCode">
+                      </div>
+                    </div>
+                    <div class="form-group row buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4 search-btn">Next</button>
+                    </div>
+                  </div> <!-- location-content end -->
+
+
+                  <!-- Property tab -->
+                  <div class="property-content" id="property-content">
+                    <div class="form-group row">
+                      <label for="minPurchasePrice" class="col-sm-2 col-form-label">Minimum Purchase Price</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Minimum Purchase Price" [(ngModel)]="deal.minPurchasePrice">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="maxPurchasePrice" class="col-sm-2 col-form-label">Maximum Purchase Price</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Maximum Purchase Price" [(ngModel)]="deal.maxPurchasePrice">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Property Type</label>
+                      <div class="col-sm-9">
+                        <select [(ngModel)]="deal.propertyType" name="propertyType" class="form-control">
+                          <option value="Single Family">Single Family Home</option>
+                          <option value="Condo">Condo</option>
+                          <option value="Duplex">Multifamily: Duplex</option>
+                          <option value="Triplex">Multifamily: Triplex</option>
+                          <option value="Quadplex">Multifamily: 4plex</option>
+                          <option value="Five-plus">Commercial: 5+</option>
+                          <option value="Apartments">Commercial: Apartments</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Minimum Bedrooms</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.minBedrooms" name="minBedrooms" class="form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5+">5+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 col-form-label">Maximum Bedrooms</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.maxBedrooms" name="bedrooms" class="form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5+">5+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Minimum Bathrooms</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.minBathrooms" name="bathrooms" class="form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5+">5+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Maximum Bathrooms</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.maxBathrooms" name="bathrooms" class="form-control">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5+">5+</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="maxRehab" class="col-sm-2 col-form-label">Max Rehab Cost</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Max Rehab Cost" [(ngModel)]="deal.maxRehabCost">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="arv" class="col-sm-2 col-form-label">After Repair Value</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter After Repair Value" [(ngModel)]="deal.afterRepairValue">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="yearBuilt" class="col-sm-2 col-form-label">Year Built</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Year Built" [(ngModel)]="deal.yearBuilt">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="squareFootage" class="col-sm-2 col-form-label">Square Footage</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Square Footage" [(ngModel)]="deal.squareFootage">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Seller Financing Available?</label>
+                      <div class="col-sm-4">
+                        <select [(ngModel)]="deal.sellerFinancing" name="sellerFinancing" class="form-control">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4 search-btn"
+                        (click)="changeTab('property','location')">Previous</button>
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                        (click)="changeTab('property','return')">Next</button>
+                    </div>
+                  </div> <!-- property-content end -->
+
+
+                  <!-- Return tab -->
+                  <div class="return-content" id="return-content">
+                    <div class="form-group row">
+                      <label for="capRate" class="col-sm-2 col-form-label">Minimum Cap Rate %</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Cap Rate" [(ngModel)]="deal.capRate">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="cashReturn" class="col-sm-2 col-form-label">Minimum Gross Income</label>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Enter Gross Income" [(ngModel)]="deal.grossIncome">
+                      </div>
+                    </div>
+                    <div class="form-group row buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4 search-btn"
+                        (click)="changeTab('return','property')">Previous</button>
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                        (click)="changeTab('return','confirm')">Next</button>
+                    </div>
+                  </div> <!-- return-content end -->
+
+
+                  <!-- Confirm tab -->
+                  <div class="confirm-content" id="confirm-content">
+                    <div class="form-group row">
+                      <label for="city" class="col-sm-2 col-form-label">City</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.city" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="state" class="col-sm-2 col-form-label">State</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.state" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="zip" class="col-sm-2 col-form-label">Zip Code</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.zipCode" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="propertyType" class="col-sm-2 col-form-label">Property Type</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.propertyType" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="purchasePrice" class="col-sm-2 col-form-label">Purchase Price</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.purchasePrice" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="bedrooms" class="col-sm-2 col-form-label">Minimum Bedrooms</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.minBedrooms" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="bedrooms" class="col-sm-2 col-form-label">Maximum Bedrooms</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.maxBedrooms" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="bathrooms" class="col-sm-2 col-form-label">Minimum Bathrooms</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.minBathrooms" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="bathrooms" class="col-sm-2 col-form-label">Maximum Bathrooms</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.maxBathrooms" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="maxRehab" class="col-sm-2 col-form-label">Max Rehab Cost</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.maxRehabCost" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="arv" class="col-sm-2 col-form-label">After Repair Value</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.afterRepairValue" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="yearBuilt" class="col-sm-2 col-form-label">Oldest Year</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.yearBuilt" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="squareFootage" class="col-sm-2 col-form-label">Minimum Square Footage</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.squareFootage" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="sellerFinancing" class="col-sm-2 col-form-label">Seller Financing Available</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.sellerFinancing" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="capRate" class="col-sm-2 col-form-label">Cap Rate</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.capRate" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="minGrossIncome" class="col-sm-2 col-form-label">Minimum Gross Income</label>
+                      <div class="col-sm-10">
+                        <input class="form-control" [(ngModel)]="deal.grossIncome" disabled>
+                      </div>
+                    </div>
+
+                    <div class="form-group row buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4 search-btn"
+                        (click)="changeTab('confirm','return')">Previous</button>
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                        (click)="search()">Next</button>
+                    </div>
+                  </div>  <!-- confirm-content end -->
+
+
+                  <div class="search-complete-content" id="search-complete-content">
+                    <div class="form-group row buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4 search-btn"
+                          (click)="startOver()">Start Over</button>
+                    </div>
+                  </div> <!-- search-complete end -->
+
+
+                </div> <!-- card-body ends -->
+              </div> <!-- card ends -->
+            </div> <!-- col-12 grid-margin ends -->
+          </div> <!-- row ends -->
+
+
+          <div class="row" id="table-row">
+            <div class="col-xs-12 grid-margin stretch-card" id="responsive-stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Results</h4>
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">City</th>
+                          <th scope="col">State</th>
+                          <th scope="col">Zip Code</th>
+                          <th scope="col">Property Type</th>
+                          <th scope="col">Purchase Price</th>
+                          <th scope="col">Bedrooms</th>
+                          <th scope="col">Bathrooms</th>
+                          <th scope="col">Square Footage</th>
+                          <th scope="col">Year Built</th>
+                          <th scope="col">Seller Financing</th>
+                          <th scope="col">Net Operating Income</th>
+                          <th scope="col">Cap Rate</th>
+                          <th scope="col">CoC Return</th>
+                          <th scope="col">Real Return</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor=" let ad of currentAds
+                          | filterCity: deal.city
+                          | filterState: deal.state
+                          | filterZipCode: deal.zipCode
+                          | filterPropertyType: deal.propertyType
+                          | filterPurchasePrice: deal.purchasePrice
+                          | filterMinBedrooms: deal.minBedrooms
+                          | filterMaxBedrooms: deal.maxBedrooms
+                          | filterMinBathrooms: deal.minBathrooms
+                          | filterMaxBathrooms: deal.maxBathrooms
+                          | filterMaxRehabCost: deal.maxRehabCost
+                          | filterAfterRepairValue: deal.afterRepairValue
+                          | filterYearBuilt: deal.yearBuilt
+                          | filterSquareFootage: deal.squareFootage
+                          | filterSellerFinancing: deal.sellerFinancing
+                          | filterMinCapRate: deal.capRate
+                          | filterMinGrossIncome: deal.grossIncome
+                          ; let i = index ">
+                          <th scope="row">{{ i + 1 }}</th>
+                          <td>{{ ad.city }}</td>
+                          <td>{{ ad.state }}</td>
+                          <td>{{ ad.zipCode }}</td>
+                          <td>{{ ad.propertyType }}</td>
+                          <td>$ {{ ad.purchasePrice }}</td>
+                          <td>{{ ad.bedrooms }}</td>
+                          <td>{{ ad.bathrooms }}</td>
+                          <td>{{ ad.squareFootage }}</td>
+                          <td>{{ ad.yearBuilt }}</td>
+                          <td>{{ ad.sellerFinancing }}</td>
+                          <td>$ {{ ad.netOperatingIncome }}</td>
+                          <td>{{ ad.capRate }}%</td>
+                          <td>{{ ad.cashOnCashReturn }}%</td>
+                          <td>{{ ad.internalRateOfReturn }}%</td>
+                          <td *ngIf="investorUserType && ad.investorId=='currentUser'">
+                            <button class="btn btn-inverse-danger btn-rounded btn-fw" (click)="deleteAd(ad._id)">Delete</button>
+                          </td>
+                          <td *ngIf="ad.investorId!='currentUser'">
+                            <button class="btn btn-inverse-primary btn-rounded btn-fw"
+                              [routerLink]="['/user/', ad.investorId]">Profile
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div> <!-- content-wrapper ends -->
+
+
+
+        <app-footer></app-footer>
+
+
+      </div> <!-- main panel ends -->
+
+
+
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller ends -->
+
+</body>
+
+</html>

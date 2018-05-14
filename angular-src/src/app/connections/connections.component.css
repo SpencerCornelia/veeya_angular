@@ -1,0 +1,48 @@
+.user-card {
+  cursor: pointer;
+}
+
+#connection-photo-wrapper {
+  width: 20%;
+}
+
+#connection-photo {
+  width: 120px;
+  height: 110px;
+  border-radius: 10%;
+}
+
+#connection-photo:hover {
+  cursor: pointer;
+}
+
+#connection-name-wrapper {
+  width: 55%;
+}
+
+#connection-name-wrapper > a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: blue;
+}
+
+#connection-stats-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.connection-stats-number {
+  text-align: center;
+}
+
+.connections-search-input {
+  width: 40%;
+}
+
+.connections-search-input input {
+  width: 100%;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

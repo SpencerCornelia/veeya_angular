@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+
+      <div class="main-panel" *ngIf="currentUser">
+        <div class="content-wrapper">
+          <div class="row user-profile">
+            <div class="col-lg-4 side-left d-flex align-items-stretch">
+              <div class="row">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body avatar">
+                      <h4 class="card-title">Info</h4>
+                      <img src="{{ currentUser.profilePhoto }}" alt="">
+                      <p class="name">{{ currentUser.firstName }} {{ currentUser.lastName }}</p>
+                      <p class="designation">-  {{ currentUser.userType }}  -</p>
+                      <a class="d-block text-center text-dark">{{ currentUser.email }}</a>
+                      <a class="d-block text-center text-dark">{{ currentUser.phoneNumber }}</a>
+                      <a class="d-block text-center text-dark">{{ currentUser.city }}, {{ currentUser.state }}</a>
+                    </div>
+                    <div class="card-body overview">
+                      <ul class="achievements">
+                        <li><p>{{ currentUser?.profileViews }}</p><p>Profile Views</p></li>
+                        <li><p>{{ currentUser.connections.length }}</p><p>Connections</p></li>
+                        <li><p>0</p><p>Deals</p></li>
+                      </ul>
+                      <div class="info-links">
+                        <label>Personal Website</label>
+                        <a class="website" target="_blank" href="{{ currentUser.URLs.personal }}"
+                          *ngIf="currentUser.URLs.personal.length>0">
+                          <span>{{ currentUser.URLs.personal }}</span>
+                        </a>
+                        <p *ngIf="currentUser.URLs.personal.length==0"><em><small>Not entered yet</small></em></p>
+                        <label>Facebook</label>
+                        <a class="social-link" target="_blank" href="{{ currentUser.URLs.facebook }}"
+                          *ngIf="currentUser.URLs.facebook.length>0">
+                          <span>{{ currentUser.URLs.facebook }}</span>
+                        </a>
+                        <p *ngIf="currentUser.URLs.facebook.length==0"><em><small>Not entered yet</small></em></p>
+                        <label>LinkedIn</label>
+                        <a class="social-link" target="_blank" href="{{ currentUser.URLs.linkedIn }}"
+                          *ngIf="currentUser.URLs.facebook.length>0">
+                          <span>{{ currentUser.URLs.linkedIn }}</span>
+                        </a>
+                        <p *ngIf="currentUser.URLs.linkedIn.length==0"><em><small>Not entered yet</small></em></p>
+                        <label>Bigger Pockets</label>
+                        <a class="social-link" target="_blank" href="{{ currentUser.URLs.biggerPockets }}"
+                          *ngIf="currentUser.URLs.biggerPockets.length>0">
+                          <span>{{ currentUser.URLs.biggerPockets }}</span>
+                        </a>
+                        <p *ngIf="currentUser.URLs.biggerPockets.length==0"><em><small>Not entered yet</small></em></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 side-right stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="wrapper d-block d-sm-flex align-items-center justify-content-between">
+                    <h4 class="card-title mb-0">Details</h4>
+                    <ul class="nav nav-tabs tab-solid tab-solid-primary mb-0" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-expanded="true">Info</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="avatar-tab" data-toggle="tab" href="#avatar" role="tab"
+                        aria-controls="avatar" (click)="clickProfileImageTab()">Profile Image
+                      </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="security-tab" data-toggle="tab" href="#security" role="tab" aria-controls="security">Change Password</a>
+                      </li>
+                    </ul>
+                  </div>
+
+
+
+                  <div class="wrapper">
+                    <hr>
+                    <div class="tab-content" id="myTabContent">
+                      <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info">
+                        <form (submit)="onSubmit()" #form="ngForm">
+                          <div class="form-group">
+                            <button type="button" class="btn btn-info mr-2" (click)="editProfile()">Edit</button>
+                          </div>
+                          <div class="form-group">
+                            <label for="userName">Username</label>
+                            <input type="text" class="form-control" id="userName"
+                              [(ngModel)]="currentUser.userName"
+                              name="userName"
+                              [disabled]="isDisabled()"
+                              #userName="ngModel"
+                              minlength="2"
+                              maxlength="30"
+                              pattern="^[a-zA-Z0-9-]+"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName"
+                              [(ngModel)]="currentUser.firstName"
+                              name="firstName"
+                              [disabled]="isDisabled()"
+                              #firstName="ngModel"
+                              minlength="2"
+                              maxlength="30"
+                              pattern="^[a-zA-Z ]+$"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName"
+                              [(ngModel)]="currentUser.lastName"
+                              name="lastName"
+                              [disabled]="isDisabled()"
+                              #lastName="ngModel"
+                              minlength="2"
+                              maxlength="30"
+                              pattern="^[a-zA-Z ]+$"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email"
+                              [(ngModel)]="currentUser.email"
+                              name="email"
+                              [disabled]="isDisabled()"
+                              pattern="^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumber"
+                              [(ngModel)]="currentUser.phoneNumber"
+                              name="phoneNumber"
+                              [disabled]="isDisabled()"
+                              #phoneNumber="ngModel"
+                              pattern="^(\+0?1\s)?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city"
+                              [(ngModel)]="currentUser.city"
+                              name="city"
+                              [disabled]="isDisabled()"
+                              minlength="3"
+                              maxlength="30"
+                              pattern="^[a-zA-Z ]*$"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state"
+                              *ngIf="isDisabled()"
+                              [(ngModel)]="currentUser.state"
+                              name="state"
+                              [disabled]="isDisabled()"
+                            />
+                            <select *ngIf="!isDisabled()" [(ngModel)]="currentUser.state" #state="ngModel" name="state" class="form-control" required>
+                              <option value="AL">Alabama</option>
+                              <option value="AK">Alaska</option>
+                              <option value="AZ">Arizona</option>
+                              <option value="AR">Arkansas</option>
+                              <option value="CA">California</option>
+                              <option value="CO">Colorado</option>
+                              <option value="CT">Connecticut</option>
+                              <option value="DE">Delaware</option>
+                              <option value="DC">District Of Columbia</option>
+                              <option value="FL">Florida</option>
+                              <option value="GA">Georgia</option>
+                              <option value="HI">Hawaii</option>
+                              <option value="ID">Idaho</option>
+                              <option value="IL">Illinois</option>
+                              <option value="IN">Indiana</option>
+                              <option value="IA">Iowa</option>
+                              <option value="KS">Kansas</option>
+                              <option value="KY">Kentucky</option>
+                              <option value="LA">Louisiana</option>
+                              <option value="ME">Maine</option>
+                              <option value="MD">Maryland</option>
+                              <option value="MA">Massachusetts</option>
+                              <option value="MI">Michigan</option>
+                              <option value="MN">Minnesota</option>
+                              <option value="MS">Mississippi</option>
+                              <option value="MO">Missouri</option>
+                              <option value="MT">Montana</option>
+                              <option value="NE">Nebraska</option>
+                              <option value="NV">Nevada</option>
+                              <option value="NH">New Hampshire</option>
+                              <option value="NJ">New Jersey</option>
+                              <option value="NM">New Mexico</option>
+                              <option value="NY">New York</option>
+                              <option value="NC">North Carolina</option>
+                              <option value="ND">North Dakota</option>
+                              <option value="OH">Ohio</option>
+                              <option value="OK">Oklahoma</option>
+                              <option value="OR">Oregon</option>
+                              <option value="PA">Pennsylvania</option>
+                              <option value="RI">Rhode Island</option>
+                              <option value="SC">South Carolina</option>
+                              <option value="SD">South Dakota</option>
+                              <option value="TN">Tennessee</option>
+                              <option value="TX">Texas</option>
+                              <option value="UT">Utah</option>
+                              <option value="VT">Vermont</option>
+                              <option value="VA">Virginia</option>
+                              <option value="WA">Washington</option>
+                              <option value="WV">West Virginia</option>
+                              <option value="WI">Wisconsin</option>
+                              <option value="WY">Wyoming</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="website">Personal Website URL</label>
+                            <input type="text" class="form-control" id="personalWebsiteURL"
+                              [(ngModel)]="currentUser.URLs.personal"
+                              name="personal"
+                              [disabled]="isDisabled()"
+                              #personalWebsiteURL="ngModel"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="website">Facebook URL</label>
+                            <input type="text" class="form-control" id="facebookURL"
+                              [(ngModel)]="currentUser.URLs.facebook"
+                              name="facebook"
+                              [disabled]="isDisabled()"
+                              #facebook="ngModel"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="website">LinkedIn URL</label>
+                            <input type="text" class="form-control" id="linkedInURL"
+                              [(ngModel)]="currentUser.URLs.linkedIn"
+                              name="linkedIn"
+                              [disabled]="isDisabled()"
+                              #linkedIn="ngModel"
+                            />
+                          </div>
+                          <div class="form-group">
+                            <label for="website">Bigger Pockets URL</label>
+                            <input type="text" class="form-control" id="biggerpocketsURL"
+                              [(ngModel)]="currentUser.URLs.biggerPockets"
+                              name="biggerPockets"
+                              [disabled]="isDisabled()"
+                              #biggerPockets="ngModel"
+                            />
+                          </div>
+                          <div class="form-group mt-5">
+                            <button id="updateBtn" type="submit" class="btn btn-success mr-2" [disabled]="form.invalid || isDisabled()">Update</button>
+                            <button type="button" class="btn btn-outline-danger" [disabled]="isDisabled()"
+                              (click)="cancelEditInfo($event)">Cancel
+                            </button>
+                          </div>
+                        </form>
+                      </div><!-- tab content ends -->
+
+
+                      <div class="tab-pane fade" id="avatar" role="tabpanel" aria-labelledby="avatar-tab">
+                        <div class="wrapper mb-5 mt-4">
+                          <span class="badge badge-warning text-white">Note : </span>
+                          <p class="d-inline ml-3 text-muted">Image size is limited to not greater than 1MB .</p>
+                        </div>
+                        <form (submit)="uploadProfilePhoto()">
+                          <input type="file" id="imageInput" class="dropify" data-max-file-size="1mb" data-default-file="/assets/images/faces/face6.jpg" (change)="addProfileImage($event)" />
+                          <div class="form-group mt-5">
+                            <button id="updatePhotoButton" type="submit" class="btn btn-success mr-2">Update</button>
+                            <button class="btn btn-outline-danger" type="button">Cancel</button>
+                          </div>
+                        </form>
+                      </div>
+
+                      <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                        <form (submit)="updatePassword()" #passwordForm="ngForm">
+                          <div class="form-group">
+                            <label for="change-password">Change password</label>
+                            <input type="password" class="form-control" id="change-password"
+                              placeholder="Enter you current password"
+                              [(ngModel)]="password.current"
+                              name="current"
+                              #current="ngModel"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <input type="password" class="form-control" id="new-password"
+                              placeholder="Enter you new password"
+                              [(ngModel)]="password.new"
+                              #new="ngModel"
+                              name="new"
+                              required
+                            />
+                          </div>
+                          <div class="form-group">
+                            <input type="password" class="form-control" id="new-password-confirm"
+                              placeholder="Confirm your new password"
+                              [(ngModel)]="password.newConfirm"
+                              name="newConfirm"
+                              #newConfirm="ngModel"
+                              required
+                            />
+                          </div>
+                          <div class="form-group mt-5">
+                            <button id="submitBtn" type="submit" class="btn btn-success mr-2"
+                              [disabled]="passwordForm.invalid">Update
+                            </button>
+                            <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                          </div>
+                        </form>
+                      </div> <!-- End of security tab -->
+
+
+                    </div> <!-- End of #myTabContent-->
+
+
+                  </div> <!-- End of #wrapper -->
+
+                </div> <!-- End of card-body -->
+
+                <div class="button-wrapper">
+                  <button class="btn btn-inverse-danger btn-rounded btn-fw" (click)="onDelete()">Delete My Account</button>
+                </div>
+
+              </div> <!-- End of card -->
+
+            </div> <!-- End of col-lg-8 side-right stretch-card-->
+
+
+          </div> <!-- End of row user-profile -->
+
+        </div> <!-- content-wrapper ends -->
+
+
+
+        <app-footer></app-footer>
+
+
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+</body>
+
+</html>

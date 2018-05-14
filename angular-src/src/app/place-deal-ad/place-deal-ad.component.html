@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">What Deal Are You Looking For?</h4>
+                  <ul class="nav nav-tabs tab-solid tab-solid-primary" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="tab-5-1" data-toggle="tab" href="#locationTab" role="tab"
+                        aria-controls="location-5-1" aria-selected="true">Location
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-5-2" data-toggle="tab" href="#propertyTab" role="tab"
+                        aria-controls="property-5-2" aria-selected="false">Property
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tab-5-3" data-toggle="tab" href="#numbersTab" role="tab" aria-controls="numbers-5-3"
+                        aria-selected="false">Numbers
+                      </a>
+                    </li>
+                  </ul>
+
+
+                  <div class="tab-content tab-content-solid">
+
+                    <div class="tab-pane fade show active" id="locationTab" role="tabpanel" aria-labelledby="location-5-1">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <form class="forms-sample" #locationForm="ngForm">
+                            <div class="form-group">
+                              <label for="city" class="required-field">City</label>
+                              <input type="text" class="form-control" id="city"
+                                placeholder="Enter City"
+                                [(ngModel)]="newAd.city"
+                                name="city"
+                                #city="ngModel"
+                                minlength="2"
+                                maxlength="30"
+                                pattern="^[a-zA-Z ]+$"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="state" class="required-field">State</label>
+                              <select [(ngModel)]="newAd.state" #state="ngModel" name="state" class="form-control" required>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label class="required-field col-sm-5 col-form-label">Zip Code</label>
+                              <input type="text" class="form-control"
+                                placeholder="Enter Zip"
+                                [(ngModel)]="newAd.zipCode"
+                                #zipCode="ngModel"
+                                name="zipCode"
+                                pattern="^[0-9]*$"
+                                minlength="5"
+                                maxlength="10"
+                              />
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div> <!-- End of location tab body -->
+
+
+
+                    <div class="tab-pane fade" id="propertyTab" role="tabpanel" aria-labelledby="property-5-2">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <form class="forms-sample" #propertyForm="ngForm">
+                            <div class="form-group">
+                              <label for="Purchase Price" class="required-field">Max Purchase Price</label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" class="form-control" id="purchasePrice"
+                                  placeholder="Enter Purchase Price"
+                                  [(ngModel)]="newAd.purchasePrice"
+                                  name="purchasePrice"
+                                  #purchasePrice="ngModel"
+                                  minlength="5"
+                                  maxlength="10"
+                                  pattern="^[0-9]*$"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="Property Type" class="required-field">Property Type</label>
+                              <select [(ngModel)]="newAd.propertyType" #propertyType="ngModel"
+                                name="propertyType"
+                                class="form-control"
+                                (change)="perUnitCheck()"
+                              >
+                                <option value="Single Family">Single Family Home</option>
+                                <option value="Condo">Condo</option>
+                                <option value="Duplex">Multifamily: Duplex</option>
+                                <option value="Triplex">Multifamily: Triplex</option>
+                                <option value="Quadplex">Multifamily: 4plex</option>
+                                <option value="Five-plus">Commercial: 5+</option>
+                                <option value="Apartments">Commercial: Apartments</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="Bedrooms" class="required-field" *ngIf="!perUnit">
+                                Bedrooms
+                              </label>
+                              <label for="Bedrooms" class="required-field" *ngIf="perUnit">
+                                Bedrooms Per Unit
+                              </label>
+                              <select [(ngModel)]="newAd.bedrooms" #bedrooms="ngModel" name="bedrooms" class="form-control">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5+">5+</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="Bathrooms" class="required-field" *ngIf="!perUnit">
+                                Bathrooms
+                              </label>
+                              <label for="Bathrooms" class="required-field" *ngIf="perUnit">
+                                Bathrooms Per Unit
+                              </label>
+                              <select [(ngModel)]="newAd.bathrooms" #bathrooms="ngModel" name="bathrooms" class="form-control">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5+">5+</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="squareFootage" class="required-field">Square Footage</label>
+                              <input type="text" class="form-control"
+                                placeholder="Enter Square Footage"
+                                [(ngModel)]="newAd.squareFootage"
+                                #squareFootage="ngModel"
+                                name="squareFootage"
+                                minlength="3"
+                                maxlength="6"
+                                pattern="^[0-9]*$"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="yearBuilt" class="required-field">Year Built</label>
+                              <input type="text" class="form-control"
+                                placeholder="Enter Year Built"
+                                [(ngModel)]="newAd.yearBuilt"
+                                #yearBuilt="ngModel"
+                                name="yearBuilt"
+                                minlength="4"
+                                maxlength="4"
+                                pattern="^[0-9]*$"
+                              />
+                            </div>
+                            <div class="form-group">
+                              <label for="Seller Financing" class="required-field">Seller Financing Available?</label>
+                              <select [(ngModel)]="newAd.sellerFinancing" #sellerFinancing="ngModel" name="sellerFinancing" class="form-control">
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                              </select>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div> <!-- End of property tab body -->
+
+
+                    <div class="tab-pane fade" id="numbersTab" role="tabpanel" aria-labelledby="numbers-5-3">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <form class="forms-sample" #numbersForm="ngForm">
+                            <div class="form-group">
+                              <label for="Purchase Price" class="required-field">Net Operating Income</label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" class="form-control" id="netOperatingIncome"
+                                  placeholder="Enter Net Operating Income"
+                                  [(ngModel)]="newAd.netOperatingIncome"
+                                  name="netOperatingIncome"
+                                  #netOperatingIncome="ngModel"
+                                  minlength="5"
+                                  maxlength="10"
+                                  pattern="^[0-9]*$"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="Cap Rate" class="required-field">Cap Rate</label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                                <input type="text" class="form-control" id="capRate"
+                                  placeholder="Enter Cap Rate"
+                                  [(ngModel)]="newAd.capRate"
+                                  name="capRate"
+                                  #capRate="ngModel"
+                                  maxlength="3"
+                                  pattern="^[0-9]\d*(\.\d+)?$"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="Cap Rate" class="required-field">Cash on Cash Return</label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                                <input type="text" class="form-control" id="cashOnCashReturn"
+                                  placeholder="Enter Cash Return %"
+                                  [(ngModel)]="newAd.cashOnCashReturn"
+                                  name="cashOnCashReturn"
+                                  #cashOnCashReturn="ngModel"
+                                  maxlength="3"
+                                  pattern="^[0-9]\d*(\.\d+)?$"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label for="Cap Rate" class="required-field">Internal Rate of Return</label>
+                              <div class="input-group">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text">%</span>
+                                </div>
+                                <input type="text" class="form-control" id="internalRateOfReturn"
+                                  placeholder="Enter Internal Rate of Return %"
+                                  [(ngModel)]="newAd.internalRateOfReturn"
+                                  name="internalRateOfReturn"
+                                  #internalRateOfReturn="ngModel"
+                                  maxlength="3"
+                                  pattern="^[0-9]\d*(\.\d+)?$"
+                                />
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div> <!-- End of Numbers tab body -->
+
+
+
+                  </div> <!-- End of tab content -->
+
+
+                </div> <!-- End of card body -->
+
+              </div> <!-- End of card -->
+
+            </div> <!-- End of col-md-6 grid-margin stretch-card -->
+
+
+
+            <div class="col-md-6 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Send to Wholesalers</h4>
+                  <small><em>When you submit the ad, your wholesaler connections will receive a notification and have the ability to
+                    view the deals you are looking for.  The more specific your numbers, the better your results.
+                  </em></small>
+                  <div class="row" id="submit-button-row">
+                    <button class="btn btn-inverse-primary btn-rounded btn-fw" (click)="placeAd()">Submit Ad</button>
+                  </div>
+
+                </div> <!-- End of card body -->
+
+              </div> <!-- End of card -->
+
+            </div> <!-- End of col-md-6 grid-margin -->
+
+
+
+
+          </div> <!-- End of row -->
+
+        </div>
+        <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller -->
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+#content-wrapper {
+  width: 80%;
+  margin-left: 5%;
+}
+
+#title-row {
+  width: 100%;
+}
+
+.wizard-steps {
+  width: 100%;
+  float: left;
+  text-align: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.tab {
+  width: 15%;
+  height: 70px;
+  border-radius: 5px;
+  background: #f7f7f9;
+  color: #6c757d;
+}
+
+.tab.active {
+  width: 17%;
+  height: 70px;
+  border-radius: 5px;
+  background-color: #1991EA;
+  color: white;
+}
+
+.tab-text {
+  margin-top: 23px;
+}
+
+.submit-add-property-btn {
+  margin-left: 40%;
+}
+
+.buttons {
+  width: 100%;
+}
+
+.buttons button {
+  width: 140px;
+  height: 40px;
+}
+
+.add-property-btn {
+  display: table;
+  margin: 0 auto;
+}
+
+.form-control.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+.form-control.ng-valid.ng-touched {
+  border: 2px solid #2E8B57;
+}
+
+#submitBtn:disabled {
+  cursor: not-allowed;
+}
+
+#updateBtn:disabled {
+  cursor: not-allowed;
+}
+
+.required-field:after {
+  content: " *";
+  color: red;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

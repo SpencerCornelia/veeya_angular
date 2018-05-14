@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body auction-header">
+                  <div class="timer" *ngIf="auctionOpen">
+                    <div class="timer-item">
+                      <div class="timer-countdown">{{ days }}</div>
+                      <div class="timer-text">Days</div>
+                    </div>
+                    <div class="timer-item">
+                      <div class="timer-countdown">{{ hours }}</div>
+                      <div class="timer-text">Hours</div>
+                    </div>
+                    <div class="timer-item">
+                      <div class="timer-countdown">{{ minutes }}</div>
+                      <div class="timer-text">Minutes</div>
+                    </div>
+                    <div class="timer-item">
+                      <div class="timer-countdown">{{ seconds }}</div>
+                      <div class="timer-text">Seconds</div>
+                    </div>
+                  </div>
+
+
+                  <div *ngIf="auctionOpen && userType=='Wholesaler'" class="auction-button-container">
+                    <button type="button" class="auction-button" (click)="endAuction()">End Auction</button>
+                  </div>
+                  <div *ngIf="userType=='Investor'" class="auction-button-container">
+                    <button class="auction-button" (click)="addBidModal()"
+                      *ngIf="auctionOpen">Add bid
+                    </button>
+                    <button class="auction-button"
+                      *ngIf="!auctionOpen">Auction Closed
+                    </button>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row" *ngFor="let bid of bids">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <tbody>
+                        <tr class="table-row">
+                          <td id="bid-user-photo-wrapper">
+                            <div class="d-flex justify-content-center">
+                              <img src="{{ bid.profilePhoto }}" alt="" id="bid-user-photo">
+                            </div>
+                          </td>
+                          <td id="bid-name-wrapper">
+                            <a [routerLink]="['/user/', bid.userId]">
+                              <h3>{{ bid.firstName }} {{ bid.lastName }}</h3>
+                            </a>
+                            <div>
+                              {{ bid.bidPlacedTime }}
+                            </div>
+                            <div>
+                              {{ bid.bidPlacedDate }}
+                            </div>
+                            <div>
+                              <button type="button" class="btn btn-inverse-primary btn-rounded btn-sm mt-3 mb-4"
+                                [routerLink]="['/user/', bid.userId]">View User
+                              </button>
+                            </div>
+                          </td>
+                          <td>
+                            <h3 class="bid-row-right">
+                              $ {{ bid.amount }}
+                            </h3>
+                            <div class="bid-row-right">
+                              <div class="btn btn-primary btn-rounded btn-fw" id="city-state">
+                                {{ bid.city }}, {{ bid.state }}
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- Add Bid MODAL -->
+          <div class="modal fade" id="addBidModal" tabindex="-1" role="dialog"
+                    aria-labelledby="addBidModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addBidModal">Add Bid</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="forms-sample" #addBidForm="ngForm">
+                    <div class="form-group">
+                      <label for="bidAmount">Bid Amount</label>
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" id="bidAmount"
+                          #bidAmount="ngModel"
+                          name="bidAmount"
+                          [(ngModel)]="newBid.amount"
+                          maxlength="12"
+                          pattern="^[a-zA-Z0-9,.$ ]*$"
+                          required
+                        >
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button id="addBidConfirm" type="button"
+                    class="btn btn-primary"
+                    [disabled]="addBidForm.invalid"
+                    (click)="addBid()"
+                  >Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> <!-- END MODAL -->
+
+
+        </div> <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+      </div> <!-- main-panel ends -->
+
+
+    </div> <!-- page-body-wrapper ends -->
+
+
+
+  </div> <!-- container-scroller -->
+
+
+</body>
+
+</html>

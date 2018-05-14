@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <link rel="shortcut icon" href="images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">
+      <div class="main-panel" id="main-panel-generate-report">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div><button class="btn btn-inverse-primary btn-rounded btn-fw" [disabled]="this.firstYear" (click)="previousYear()">
+                Previous Year</button>
+              </div>
+              <p class="current-year-title">{{ currentYear }}</p>
+              <div><button class="btn btn-inverse-primary btn-rounded btn-fw" [disabled]="this.lastYear" (click)="nextYear()">
+                Next Year</button>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-cube text-danger icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Cash on Cash Return</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">{{ cashOnCashReturn }}%</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i>Cash return in {{ currentYear }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-receipt text-warning icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Equity Built</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">${{ equityBuilt }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i>Equity built in {{ currentYear }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-poll-box text-teal icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Net Worth Growth</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">${{ totalReturnDollars }}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i>Growth in net worth in {{ currentYear }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <i class="mdi mdi-account-location text-info icon-lg"></i>
+                    </div>
+                    <div class="float-right">
+                      <p class="card-text text-right">Real Return</p>
+                      <div class="fluid-container">
+                        <h3 class="card-title font-weight-bold text-right mb-0">{{ totalReturnPercent }}%</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-muted mt-3">
+                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i>Internal Rate of Return in {{ currentYear }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Monthly Numbers</h5>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="column-head">Category</th>
+                          <th scope="col" class="column-head">Name</th>
+                          <th scope="col" class="column-head">Income</th>
+                          <th scope="col" class="column-head">Expense</th>
+                          <th scope="col" class="column-head">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Income</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Gross Rent</td>
+                          <td class="text-success">$ {{ averageRent }}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr *ngFor="let income of extraIncomes">
+                          <th></th>
+                          <td>{{ income.incomeName }}</td>
+                          <td class="text-success">$ {{ income.incomeAmount }}</td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Total Income</td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-success">$ {{ totalIncome }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Fixed Expenses</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Mortgage</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ monthlyPayment }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>PMI</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ pmiAmount }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Property Taxes</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ propertyTax }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Insurance</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ insurance }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>HOA</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ HOA }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Utilities</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ utilities }}</td>
+                          <td></td>
+                        </tr>
+                        <tr *ngFor="let expense of extraFixedExpenses">
+                          <th></th>
+                          <td>{{ expense.expenseName }}</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ expense.expenseAmount  }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Total Fixed Expense</td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-danger">$ {{ totalFixedExpense }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Variable Expenses</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Vacancy</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ vacancy }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Property Management</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ propertyManagement }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Capital Expenditures</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ capEx }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Small Repairs</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ smallRepairs }}</td>
+                          <td></td>
+                        </tr>
+                        <tr *ngFor="let expense of extraVariableExpenses">
+                          <th></th>
+                          <td>{{ expense.expenseName }}</td>
+                          <td></td>
+                          <td class="text-danger">$ {{ expense.expenseAmount }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td>Total Variable Expense</td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-danger">$ {{ totalVariableExpense }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Total Expenses</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td class="text-danger">$ {{ totalExpenses }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Net Monthly Cashflow</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td [ngClass]="{'text-success': cashFlow>0, 'text-danger': cashFlow<0}">
+                            <em><strong>$ {{ cashFlow }}</strong></em>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Cap Rate</th>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td [ngClass]="{'text-success': cashFlow>0, 'text-danger': cashFlow<0}">
+                            {{ capRate }} %
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Yearly Numbers</h5>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="column-head">Category</th>
+                          <th scope="col" class="column-head">Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">Net Operating Income</th>
+                          <td [ngClass]="{'text-success': netOperatingIncome>0, 'text-danger': netOperatingIncome<0}">
+                            $ {{ netOperatingIncome }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Equity Built</th>
+                          <td [ngClass]="{'text-success': equityBuilt>0, 'text-danger': equityBuilt<0}">$ {{ equityBuilt }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Depreciation</th>
+                          <td [ngClass]="{'text-success': depreciation>0, 'text-danger': depreciation<0}">
+                            $ {{ depreciation }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Income Saved from Taxes</th>
+                          <td [ngClass]="{'text-success': incomeSavedTaxes>0, 'text-danger': incomeSavedTaxes<0}">
+                            $ {{ incomeSavedTaxes }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Appreciation</th>
+                          <td [ngClass]="{'text-success': appreciation>0, 'text-danger': appreciation<0}">
+                            $ {{ appreciation }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Total Return in Dollars</th>
+                          <td [ngClass]="{'text-success': totalReturnDollars>0, 'text-danger': totalReturnDollars<0}">
+                            $ {{ totalReturnDollars }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="column-totals">Real Return</th>
+                          <td scope="row" class="column-totals"
+                            [ngClass]="{'text-success': totalReturnPercent>0, 'text-danger': totalReturnPercent<0}">
+                            <em><strong>{{ totalReturnPercent }} %</strong></em>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Amortization Schedule</h5>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col" class="column-head">Month</th>
+                          <th scope="col" class="column-head">Payment</th>
+                          <th scope="col" class="column-head">Principal Paid</th>
+                          <th scope="col" class="column-head">Interest Paid</th>
+                          <th scope="col" class="column-head">Balance Remaining</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let payment of amortizationPayments">
+                          <th scope="row">{{ payment.month}} {{ payment.year }}</th>
+                          <td>$ {{ payment.payment }}</td>
+                          <td>$ {{ payment.principalPaid }}</td>
+                          <td>$ {{ payment.interestPaid }}</td>
+                          <td>$ {{ payment.balance }}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="column-totals">Yearly Totals</th>
+                          <td class="column-totals"><strong>$ {{ yearlyTotals["totalPayments"] }}</strong></td>
+                          <td class="column-totals"><strong>$ {{ yearlyTotals["totalPrincipal"] }}</strong></td>
+                          <td class="column-totals"><strong>$ {{ yearlyTotals["totalInterest"] }}</strong></td>
+                          <td class="column-totals"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="balloonPayment&&currentYear==finalPaymentYear">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title mb-4">Balloon Payment</h5>
+                  <div class="table-responsive">
+                    $ {{ balloonPaymentBalance }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller -->
+
+</body>
+
+</html>

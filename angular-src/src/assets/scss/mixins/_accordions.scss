@@ -1,0 +1,41 @@
+// Accordion Inverse variations
+@mixin accordion-inverse-variant($color) {
+	.card {
+		background: rgba($color, 0.16);
+		color: $color;
+		border: none;
+		.card-header {
+			color: $color;
+			border: none;
+	
+			a,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			p,
+			span {
+				color: $color;
+			}
+	
+			a {
+				border-color: $color;
+	
+				&:before {
+					color: $color;
+				}
+	
+				&[aria-expanded="true"] {
+					border-bottom: 1px solid rgba($color, 0.16);
+				}
+	
+				&[aria-expanded="false"] {
+					border-bottom: 1px solid transparent;
+				}
+			}
+		}
+	}
+}
+  

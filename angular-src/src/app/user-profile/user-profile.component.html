@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+
+      <div class="main-panel" *ngIf="user">
+        <div class="content-wrapper">
+          <div class="row user-profile">
+            <div class="col-lg-4 side-left d-flex align-items-stretch">
+              <div class="row">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body avatar">
+                      <h4 class="card-title">Info</h4>
+                      <img src="{{ user.profilePhoto }}" alt="">
+                      <p class="name">{{ user.firstName }} {{ user.lastName }}</p>
+                      <p class="designation">-  {{ user.userType }}  -</p>
+                      <a class="d-block text-center text-dark">{{ user.email }}</a>
+                      <a class="d-block text-center text-dark">{{ user.phoneNumber }}</a>
+                      <a class="d-block text-center text-dark">{{ user.city }} {{ user.state }}</a>
+                    </div>
+                    <div class="connect-button-row">
+                      <button *ngIf="connected" class="btn btn-inverse-success btn-rounded btn-fw connect-button">Connected</button>
+                      <button *ngIf="connectionSent" class="btn btn-inverse-success btn-rounded btn-fw connect-button" [disabled]="disableConnectButton">Sent Request</button>
+                      <button *ngIf="notConnected && !connectionReceived" class="btn btn-inverse-primary btn-rounded btn-fw connect-button" (click)="connect()">Connect</button>
+                      <button *ngIf="connectionReceived" class="btn btn-inverse-primary btn-rounded btn-fw" id="accept-button"
+                        (click)="acceptRequest(user)">Accept
+                      </button>
+                      <button *ngIf="connectionReceived" class="btn btn-inverse-danger btn-rounded btn-fw"
+                        (click)="denyRequest(user)">Deny
+                      </button>
+                    </div>
+                    <div class="card-body overview">
+                      <ul class="achievements">
+                        <li><p>{{ user?.profileViews }}</p><p>Profile Views</p></li>
+                        <li><p>{{ user.connections.length }}</p><p>Connections</p></li>
+                        <li><p>{{ numberOfDeals }}</p><p>Deals</p></li>
+                      </ul>
+                      <br />
+                      <div class="info-links">
+                        <label>Personal Website</label>
+                        <a class="website" target="_blank" href="{{ user.URLs.personal }}"
+                          *ngIf="user.URLs.personal.length>0">
+                          <span>{{ user.URLs.personal }}</span>
+                        </a>
+                        <p *ngIf="user.URLs.personal.length==0"><em><small>Not entered yet</small></em></p>
+
+                        <label>Facebook</label>
+                        <a class="social-link" target="_blank" href="{{ user.URLs.facebook }}"
+                          *ngIf="user.URLs.facebook.length>0">
+                          <span>{{ user.URLs.facebook }}</span>
+                        </a>
+                        <p *ngIf="user.URLs.facebook.length==0"><em><small>Not entered yet</small></em></p>
+
+                        <label>LinkedIn</label>
+                        <a class="social-link" target="_blank" href="{{ user.URLs.linkedIn }}"
+                          *ngIf="user.URLs.linkedIn.length>0">
+                          <span>{{ user.URLs.linkedIn }}</span>
+                        </a>
+                        <p *ngIf="user.URLs.linkedIn.length==0"><em><small>Not entered yet</small></em></p>
+
+                        <label>Bigger Pockets</label>
+                        <a class="social-link" target="_blank" href="{{ user.URLs.biggerPockets }}"
+                          *ngIf="user.URLs.biggerPockets.length>0">
+                          <span>{{ user.URLs.biggerPockets }}</span>
+                        </a>
+                        <p *ngIf="user.URLs.biggerPockets.length==0"><em><small>Not entered yet</small></em></p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8 side-right stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="wrapper d-block d-sm-flex align-items-center justify-content-between">
+                    <h4 class="card-title mb-0">Details</h4>
+                    <ul class="nav nav-tabs tab-solid tab-solid-primary mb-0" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-expanded="true">Info</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="wrapper">
+                    <hr>
+                    <div class="tab-content" id="myTabContent">
+
+
+                      <!-- Info tab -->
+                      <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info">
+                        <form>
+                          <div class="form-group">
+                            <label for="userName">Username</label>
+                            <input type="text" class="form-control" id="userName" [(ngModel)]="user.userName" name="userName" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumber" [(ngModel)]="user.phoneNumber" name="phoneNumber" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" [(ngModel)]="user.city" name="city" disabled>
+                          </div>
+                          <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state" [(ngModel)]="user.state" name="state" disabled>
+                          </div>
+                        </form>
+                      </div><!-- End info tab -->
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller ends -->
+</body>
+
+</html>

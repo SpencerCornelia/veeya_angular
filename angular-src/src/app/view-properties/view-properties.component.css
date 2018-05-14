@@ -1,0 +1,51 @@
+.table-row {
+  width: 100%;
+  max-width: 100%;
+}
+
+#property-photo-wrapper {
+  width: 20%;
+}
+
+#property-photo {
+  width: 120px;
+  height: 110px;
+  border-radius: 10%;
+}
+
+#property-photo:hover {
+  cursor: pointer;
+}
+
+#property-address-wrapper {
+  width: 55%;
+}
+
+#property-address-wrapper > a:hover {
+  text-decoration: none;
+}
+
+.property-status {
+  margin-top: 5px;
+}
+
+.property-row-right {
+  margin-top: 10px;
+}
+
+input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}
+
+.star {
+  float: right;
+}
+
+.full {
+  color: #F0d64E;
+}
+
+.star:hover {
+  cursor: pointer;
+  color: #F0d64E;
+}

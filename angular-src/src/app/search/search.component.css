@@ -1,0 +1,16 @@
+.table-row {
+  width: 100%;
+  max-width: 100%;
+}
+
+.connections-search-input {
+  width: 40%;
+}
+
+.connections-search-input input {
+  width: 100%;
+}
+
+.connections-search-input input:focus {
+  box-shadow: 0 0 2px 2px #007DFF;
+}

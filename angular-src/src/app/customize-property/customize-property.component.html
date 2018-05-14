@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+
+      <div class="main-panel" *ngIf="property">
+        <div class="content-wrapper">
+
+        <div class="row" *ngIf="property.photos !== undefined">
+          <div class="col-lg-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Property Photos</h4>
+                <div class="row">
+                  <div *ngFor="let photo of property.photos">
+                    <div class="col-xs-4">
+                      <div class="card h-100" id="photoCard">
+                        <img id="propertyImage" src="{{ photo }}" (click)="imageModal(photo)" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+          <!-- IMAGE MODAL -->
+          <div class="modal fade bd-example-modal-lg" id="photoModal" tabindex="-1" role="dialog"
+              aria-labelledby="photoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="photoLabel">View Property Photo</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div id="property-image-wrapper">
+                  <img src="{{ enlargedPhoto }}" id="property-image-enlarged" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- END IMAGE MODAL -->
+
+
+
+
+
+        <div class="row">
+          <div class="col-lg-12 grid-margin">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title"><em>Please Note</em></h4>
+                <div class="row">
+                  <p>All fields on this form are required.  In order to present the data accurately, all metrics will need to be valid.  Please enter only numbers and decimals where appropriate.  If you believe the field should be empty, please enter 0.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-6 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Income</h4>
+                    <h6 class="required-field card-description"><em>Monthly</em></h6>
+                    <form class="forms-sample" #incomeForm="ngForm">
+                      <div class="form-group">
+                        <label for="averageRent">Gross Rent</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="property.averageRent"
+                            name="averageRent"
+                            #purchasePrice="ngModel"
+                            minlength="3"
+                            maxlength="10"
+                            pattern="^[0-9]*$"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group" id="extraIncome" >
+                        <div class="form-group" *ngFor="let income of extraIncomes">
+                          <label for="{{ income.incomeName }}">{{ income.incomeName }}</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">$</span>
+                            </div>
+                            <input type="text" class="form-control"
+                              [(ngModel)]="income.incomeAmount"
+                              name="{{ income.incomeName }}"
+                              #extraIncome="ngModel"
+                              maxlength="10"
+                              pattern="^[0-9]*$"
+                              required
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw" (click)="extraIncomeModal()">Add Extra Income</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <form class="forms-sample" #fixedExpensesForm="ngForm">
+                      <h4 class="card-title">Fixed Expenses</h4>
+                      <div class="form-group">
+                        <label for="expectedRehab">Total Expected Rehab Costs</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.expectedRehab"
+                          name="expectedRehab"
+                          #expectedRehab="ngModel"
+                          minlength="2"
+                          maxlength="10"
+                          pattern="^[0-9]*$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <br />
+                      <h6 class="required-field card-description"><em>Monthly</em></h6>
+                      <div class="form-group">
+                        <label for="propertyTaxes">Property Taxes</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="property.propertyTaxes"
+                            name="propertyTaxes"
+                            #propertyTaxes="ngModel"
+                            minlength="2"
+                            maxlength="10"
+                            pattern="^[0-9]*$"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="insurance">Insurance</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="property.insurance"
+                            name="insurance"
+                            #insurance="ngModel"
+                            minlength="2"
+                            maxlength="10"
+                            pattern="^[0-9]*$"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="hoa">HOA</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.HOA"
+                          name="HOA"
+                          #HOA="ngModel"
+                          minlength="2"
+                          maxlength="10"
+                          pattern="^[0-9]*$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="utilities">Utilities</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.utilities"
+                          name="utilities"
+                          #utilities="ngModel"
+                          minlength="2"
+                          maxlength="10"
+                          pattern="^[0-9]*$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group" id="extraIncome" >
+                        <div class="form-group" *ngFor="let expense of extraFixedExpenses">
+                          <label for="{{ expense.expenseName }}">{{ expense.expenseName }}</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">$</span>
+                            </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="expense.expenseAmount"
+                            name="{{ expense.expenseName }}"
+                            #extraFixedExpense="ngModel"
+                            minlength="2"
+                            maxlength="10"
+                            pattern="^[0-9]*$"
+                            required
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw" (click)="extraFixedExpenseModal()">
+                          Add Extra Fixed Expense</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <form class="forms-sample" #variableExpensesForm="ngForm">
+                      <h4 class="card-title">Variable Expenses</h4>
+
+                      <div class="form-group">
+                        <label for="vacancy">Vacancy</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.vacancy"
+                          name="vacancy"
+                          #vacancy="ngModel"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="propertyManagement">Property Management</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.propertyManagement"
+                          name="propertyManagement"
+                          #propertyManagement="ngModel"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="capEx">Capital Expenditures</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.capEx"
+                          name="capEx"
+                          #capEx="ngModel"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="smallRepairs">Small Repairs</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.smallRepairs"
+                          name="smallRepairs"
+                          #smallRepairs="ngModel"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                      <div class="form-group" id="extraIncome" >
+                        <div class="form-group" *ngFor="let expense of extraVariableExpenses">
+                          <label for="{{ expense.expenseName }}">{{ expense.expenseName }}</label>
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">%</span>
+                            </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="expense.percent"
+                            name="{{ expense.expenseName }}"
+                            #extraVariableExpense="ngModel"
+                            maxlength="10"
+                            pattern="^[1-9]\d*(\.\d+)?$"
+                            required
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw" (click)="extraVariableExpenseModal()">
+                          Add Extra Variable Expense</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-md-6 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Loan Terms</h4>
+                    <form class="forms-sample" #termsForm="ngForm">
+                    <div class="form-group">
+                      <label for="purchasePrice">Purchase Price</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                      <input type="text" class="form-control"
+                        [(ngModel)]="property.purchasePrice"
+                        name="purchasePrice"
+                        maxlength="10"
+                        pattern="^[1-9]\d*(\.\d+)?$"
+                        required
+                      >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="downPayment">Down Payment</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                      <input type="text" class="form-control"
+                        [(ngModel)]="property.downPayment"
+                        name="downPayment"
+                        maxlength="10"
+                        pattern="^[1-9]\d*(\.\d+)?$"
+                        required
+                      >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="amortizationSchedule">Amortization Schedule</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="property.amortizationSchedule" name="amortizationSchedule">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                          <option value="25">25</option>
+                          <option value="30">30</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="balloonPayment">Balloon Payment</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" (change)="changeBalloonPayment($event.target.value)"
+                              [(ngModel)]="property.balloonPayment" name="balloonPayment">
+                          <option value="No">No</option>
+                          <option value="Yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group" *ngIf="property.balloonPayment=='Yes'">
+                      <label for="balloonPaymentYear">Balloon Payment After Year</label>
+                      <div class="col-sm-6">
+                        <select class="form-control" [(ngModel)]="property.balloonPaymentYear" name="balloonPaymentYear">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="6">7</option>
+                          <option value="6">8</option>
+                          <option value="6">9</option>
+                          <option value="6">10</option>
+                          <option value="6">15</option>
+                          <option value="6">20</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="interestRate">Interest Rate</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">%</span>
+                        </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.interestRate"
+                          name="interestRate"
+                          maxlength="5"
+                          pattern="^[0-9]\d*(\.\d+)?$"
+                          required
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="closingCosts">Closing Costs</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.closingCosts"
+                          name="closingCosts"
+                          maxlength="10"
+                          pattern="^[0-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                    <div class="form-group">
+                      <label for="pmi">PMI</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">%</span>
+                        </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.PMI"
+                          name="PMI"
+                          pattern="^\.?[0-9]\d*(\.\d+)?$"
+                          maxlength="5"
+                          required
+                        >
+                      </div>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <form class="forms-sample" #otherForm="ngForm">
+                      <h4 class="card-title">Other</h4>
+                      <div class="form-group">
+                        <label for="afterRepairValue">Market Value After Repairs & Discount Applied</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="property.afterRepairValue"
+                            name="afterRepairValue"
+                            #afterRepairValue="ngModel"
+                            maxlength="10"
+                            pattern="^[1-9]\d*(\.\d+)?$"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inflation">Inflation</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                          <input type="text" class="form-control"
+                            [(ngModel)]="property.inflation"
+                            name="inflation"
+                            #inflation="ngModel"
+                            maxlength="10"
+                            pattern="^[1-9]\d*(\.\d+)?$"
+                            required
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="rentAppreciation">Rent Appreciation Per Year</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.rentAppreciation"
+                          #rentAppreciation="ngModel"
+                          name="rentAppreciation"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="propertyAppreciation">Property Appreciation</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.propertyAppreciation"
+                          #propertyAppreciation="ngModel"
+                          name="propertyAppreciation"
+                          maxlength="3"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="buildingValue">Building Value</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.buildingValue"
+                          name="buildingValue"
+                          #buildingValue="ngModel"
+                          minlength="2"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                      </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="marginalTaxRate">Marginal Tax Rate</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="property.marginalTaxRate"
+                          name="marginalTaxRate"
+                          #marginalTaxRate="ngModel"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                      </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+            </div> <!-- closes row flex-grow -->
+          </div> <!-- closes right side col-md-6 d-flex align-items-stretch grid-margin -->
+
+
+
+        <!-- MODALS -->
+
+          <div class="modal fade" id="extraIncomeModal" tabindex="-1" role="dialog" aria-labelledby="extraIncomeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <form class="forms-sample" #extraIncomeForm="ngForm" id="extraIncomeForm">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="extraIncomeLabel">Add Income</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group">
+                        <label for="extraIncomeName">Income Name</label>
+                        <input type="text" class="form-control" id="incomeName"
+                          #incomeName="ngModel"
+                          name="incomeName"
+                          [(ngModel)]="newIncome.incomeName"
+                          maxlength="50"
+                          pattern="^[a-zA-Z0-9,.!? ]*$"
+                          required
+                        >
+                      </div>
+                      <div class="form-group">
+                        <label for="extraIncomeAmount">Income Amount Per Month</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control" id="incomeAmount"
+                          #incomeAmount="ngModel"
+                          name="incomeAmount"
+                          [(ngModel)]="newIncome.incomeAmount"
+                          maxlength="10"
+                          pattern="^[0-9]*$"
+                          required
+                        >
+                        </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button id="extraIncomeConfirm" type="button" class="btn btn-primary" [disabled]="extraIncomeForm.invalid"
+                      (click)="addExtraIncome()">Confirm</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="fixedExpenseModal" tabindex="-1" role="dialog" aria-labelledby="fixedExpenseLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="fixedExpenseLabel">Add Expense</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="forms-sample" #fixedExpenseForm="ngForm">
+                    <div class="form-group">
+                      <label for="expenseName">Expense Name</label>
+                      <input type="text" class="form-control" id="fixedExpenseName"
+                        #fixedExpenseName="ngModel"
+                        name="fixedExpenseName"
+                        [(ngModel)]="newFixedExpense.expenseName"
+                        maxlength="50"
+                        pattern="^[a-zA-Z0-9,.!? ]*$"
+                        required
+                      >
+                    </div>
+                    <div class="form-group">
+                        <label for="extraIncomeAmount">Expense Amount Per Month</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                          </div>
+                        <input type="text" class="form-control" id="fixedExpenseAmount"
+                          #fixedExpenseAmount="ngModel"
+                          name="fixedExpenseAmount"
+                          [(ngModel)]="newFixedExpense.expenseAmount"
+                          maxlength="10"
+                          pattern="^[0-9]*$"
+                          required
+                        >
+                        </div>
+                      </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button id="fixedExpenseConfirm" type="button"
+                    class="btn btn-primary"
+                    [disabled]="fixedExpenseForm.invalid"
+                    (click)="addExtraFixedExpense()"
+                  >Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="modal fade" id="variableExpenseModal" tabindex="-1" role="dialog"
+              aria-labelledby="variableExpenseLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="variableExpenseLabel">Add Expense</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="forms-sample" #variableExpenseForm="ngForm">
+                    <div class="form-group">
+                      <label for="expenseName">Expense Name</label>
+                      <input type="text" class="form-control" id="variableExpenseName"
+                        #variableExpenseName="ngModel"
+                        name="variableExpenseName"
+                        [(ngModel)]="newVariableExpense.expenseName"
+                        maxlength="50"
+                        pattern="^[a-zA-Z0-9,.!? ]*$"
+                        required
+                      >
+                    </div>
+                    <div class="form-group">
+                        <label for="extraIncomeAmount">Expense Amount Per Month</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">%</span>
+                          </div>
+                        <input type="text" class="form-control" id="variableExpensePercent"
+                          #variableExpensePercent="ngModel"
+                          name="variableExpensePercent"
+                          [(ngModel)]="newVariableExpense.percent"
+                          maxlength="10"
+                          pattern="^[1-9]\d*(\.\d+)?$"
+                          required
+                        >
+                        </div>
+                      </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button id="variableExpenseConfirm" type="button"
+                    class="btn btn-primary"
+                    [disabled]="variableExpenseForm.invalid"
+                    (click)="addExtraVariableExpense()"
+                  >Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      </div> <!-- closes row -->
+
+
+
+        <!-- buttons -->
+        <div class="row">
+          <div class="col-md-12 d-flex align-items-stretch grid-margin">
+            <div class="row flex-grow">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title" id="generateReportTitle">Generate Report</h4>
+                    <div class="buttons">
+                      <button type="button" class="btn btn-inverse-primary btn-rounded btn-fw" (click)="generateReport()"
+                        [disabled]="incomeForm.invalid || fixedExpensesForm.invalid || variableExpensesForm.invalid || otherForm.invalid || termsForm.invalid">Generate</button>
+                      <button type="button" class="btn btn-inverse-danger btn-rounded btn-fw">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- closes button row -->
+
+
+
+
+        </div> <!-- content-wrapper ends -->
+
+
+        <app-footer></app-footer>
+
+
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+</body>
+
+</html>

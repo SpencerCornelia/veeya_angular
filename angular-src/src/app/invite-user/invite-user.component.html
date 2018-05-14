@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Veeya</title>
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <app-top-navbar></app-top-navbar>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <app-sidebar></app-sidebar>
+
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="form-row row">
+
+            <!-- Left Column -->
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Invite User to Join</h4>
+                  <form class="forms-sample" #form="ngForm" (submit)="onSubmit()">
+
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="email" class="form-control"
+                        id="email"
+                        placeholder="Enter valid email"
+                        [(ngModel)]="user.email"
+                        name="email"
+                        #email="ngModel"
+                        pattern="^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+                        required
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="userType">User Type:</label>
+                      <select [(ngModel)]="user.userType" #userType="ngModel" name="userType" class="form-control">
+                        <option value="Wholesaler">Wholesaler</option>
+                        <option value="Investor">Investor</option>
+                        <option value="Lender">Lender</option>
+                      </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success mr-2" [disabled]="form.invalid">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- End Left Column -->
+
+
+            <!-- Right Column -->
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Text to help user</h4>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Right Column -->
+
+
+        </div><!-- content-wrapper ends -->
+
+        <app-footer></app-footer>
+
+
+      </div> <!-- main-panel ends -->
+    </div> <!-- page-body-wrapper ends -->
+  </div> <!-- container-scroller -->
+
+</body>
+
+</html>
